@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 35f16059ec8e7cb47b0250b62e5301d2
+timeCreated: 1496710209
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - nodeCanvas: {instanceID: 0}
+  - guiSkin: {fileID: 11400000, guid: d52090116632f90409346fd309f77e4a, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
