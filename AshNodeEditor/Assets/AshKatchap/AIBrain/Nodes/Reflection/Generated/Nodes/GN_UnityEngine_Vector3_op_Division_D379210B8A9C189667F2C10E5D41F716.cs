@@ -7,8 +7,8 @@ using Ashkatchap.AIBrain.Nodes;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
-	[CreateNode("Actuator/UnityEngine/Vector3/op_Multiply (Vector3 a, Single d) : Vector3")]
-	public class GN_UnityEngine_Vector3_op_Multiply_UnityEngine_Vector3__System_Single : Node {
+	[CreateNode("Actuator/UnityEngine/Vector3/op_Division (Vector3 a, Single d) : Vector3")]
+	public class GN_UnityEngine_Vector3_op_Division_D379210B8A9C189667F2C10E5D41F716 : Node {
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 a;
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_System_Single d;
 
@@ -17,7 +17,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 
 #if UNITY_EDITOR
 		public override void Init() {
-			SetName("*");
+			SetName("/");
 			a = CreateIO<Input_UnityEngine_Vector3>();
 			d = CreateIO<Input_System_Single>();
 			returnVar = CreateIO<Output_UnityEngine_Vector3>();
@@ -31,7 +31,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 		}
 
 		public override void Calculate() {
-			returnVar.SetValue(a.GetValue()*d.GetValue());
+			returnVar.SetValue(a.GetValue()/d.GetValue());
 		}
 
 #if UNITY_EDITOR

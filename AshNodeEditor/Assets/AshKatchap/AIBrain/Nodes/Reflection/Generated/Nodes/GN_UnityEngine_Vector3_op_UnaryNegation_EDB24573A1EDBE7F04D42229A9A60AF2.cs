@@ -7,10 +7,9 @@ using Ashkatchap.AIBrain.Nodes;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
-	[CreateNode("Actuator/UnityEngine/Vector3/op_Subtraction (Vector3 a, Vector3 b) : Vector3")]
-	public class GN_UnityEngine_Vector3_op_Subtraction_UnityEngine_Vector3__UnityEngine_Vector3 : Node {
+	[CreateNode("Actuator/UnityEngine/Vector3/op_UnaryNegation (Vector3 a) : Vector3")]
+	public class GN_UnityEngine_Vector3_op_UnaryNegation_EDB24573A1EDBE7F04D42229A9A60AF2 : Node {
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 a;
-		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 b;
 
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Output_UnityEngine_Vector3 returnVar;
 
@@ -19,7 +18,6 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 		public override void Init() {
 			SetName("-");
 			a = CreateIO<Input_UnityEngine_Vector3>();
-			b = CreateIO<Input_UnityEngine_Vector3>();
 			returnVar = CreateIO<Output_UnityEngine_Vector3>();
 		}
 #endif
@@ -31,13 +29,12 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 		}
 
 		public override void Calculate() {
-			returnVar.SetValue(a.GetValue()-b.GetValue());
+			returnVar.SetValue(-a.GetValue());
 		}
 
 #if UNITY_EDITOR
 		protected override void Draw() {
 			a.DisplayLayout("a");
-			b.DisplayLayout("b");
 			returnVar.DisplayLayout("Return");
 		}
 #endif

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
@@ -27,7 +28,8 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 			builder.Append("	[CreateNode(\"Actuator/" + memberInfo.DeclaringType.FullName.Replace('.', '/') + "/" + TypeFinder.GetDisplayName(memberInfo, false, false) + "\")]\n");
 			filename = "GN_" + (memberInfo.DeclaringType.FullName + "_" + memberInfo.Name).Replace('.', '_');
 			if (memberInfo.MemberType == MemberTypes.Method) {
-				filename += "_" + string.Join("__", ((MethodInfo) memberInfo).GetParameters().Select(p => p.ParameterType.FullName.Replace('.', '_')).ToArray());
+				string methodSignature = string.Join("__", ((MethodInfo) memberInfo).GetParameters().Select(p => p.ParameterType.FullName.Replace('.', '_')).ToArray());
+				filename += "_" + GetHashString(methodSignature);
 			}
 			filename = filename.Replace("&", "_Out_");
 			builder.Append("	public class " + filename + " : Node {\n");
@@ -221,9 +223,18 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 				if (name.StartsWith("get_")) {
 					builder.Append(name.Substring("get_".Length));
 				} else if (name.StartsWith("op_")) {
-					builder.Append(parameters[0].Name + ".GetValue()");
-					builder.Append(OperatorFromName[name]);
-					builder.Append(parameters[1].Name + ".GetValue()");
+					if (parameters.Length == 2) {
+						builder.Append(parameters[0].Name + ".GetValue()");
+						builder.Append(OperatorFromName[name]);
+						builder.Append(parameters[1].Name + ".GetValue()");
+					}
+					else if(parameters.Length == 1) {
+						builder.Append(OperatorFromName[name]);
+						builder.Append(parameters[0].Name + ".GetValue()");
+					}
+					else {
+						throw new Exception("Unexpected number of parameters for operator");
+					}
 				}
 			} else {
 				builder.Append(memberInfo.Name + "(");
@@ -267,7 +278,21 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 			{ "op_LessThan", "<" },
 			{ "op_GreaterThan", ">" },
 			{ "op_LessThanOrEqual", "<=" },
-			{ "op_GreaterThanOrEqual", ">=" }
+			{ "op_GreaterThanOrEqual", ">=" },
+			{ "op_UnaryNegation", "-" }
 		};
+
+		static byte[] GetHash(string inputString) {
+			HashAlgorithm algorithm = MD5.Create();  //or use SHA256.Create();
+			return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+		}
+
+		static string GetHashString(string inputString) {
+			StringBuilder sb = new StringBuilder();
+			foreach (byte b in GetHash(inputString))
+				sb.Append(b.ToString("X2"));
+
+			return sb.ToString();
+		}
 	}
 }

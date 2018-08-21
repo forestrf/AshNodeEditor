@@ -8,7 +8,7 @@ using Ashkatchap.AIBrain.Nodes;
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
 	[CreateNode("Actuator/UnityEngine/Vector3/op_Inequality (Vector3 lhs, Vector3 rhs) : Boolean")]
-	public class GN_UnityEngine_Vector3_op_Inequality_UnityEngine_Vector3__UnityEngine_Vector3 : Node {
+	public class GN_UnityEngine_Vector3_op_Inequality_E41A19B227B3CED9EDF4E662C59B73ED : Node {
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 lhs;
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 rhs;
 

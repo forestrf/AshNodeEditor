@@ -7,19 +7,19 @@ using Ashkatchap.AIBrain.Nodes;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
-	[CreateNode("Actuator/UnityEngine/Animator/GetBool (String name) : Boolean")]
-	public class GN_UnityEngine_Animator_GetBool_System_String : Node {
-		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Animator refObject;
-		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_System_String name;
+	[CreateNode("Actuator/UnityEngine/Vector3/op_Equality (Vector3 lhs, Vector3 rhs) : Boolean")]
+	public class GN_UnityEngine_Vector3_op_Equality_E41A19B227B3CED9EDF4E662C59B73ED : Node {
+		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 lhs;
+		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 rhs;
 
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Output_System_Boolean returnVar;
 
 
 #if UNITY_EDITOR
 		public override void Init() {
-			SetName("GetBool");
-			refObject = CreateInput<Input_UnityEngine_Animator, UnityEngine.Animator>(new UnityEngine.Animator());
-			name = CreateIO<Input_System_String>();
+			SetName("==");
+			lhs = CreateIO<Input_UnityEngine_Vector3>();
+			rhs = CreateIO<Input_UnityEngine_Vector3>();
 			returnVar = CreateIO<Output_System_Boolean>();
 		}
 #endif
@@ -31,13 +31,13 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 		}
 
 		public override void Calculate() {
-			returnVar.SetValue((refObject.GetValue() as UnityEngine.Animator).GetBool(name.GetValue()));
+			returnVar.SetValue(lhs.GetValue()==rhs.GetValue());
 		}
 
 #if UNITY_EDITOR
 		protected override void Draw() {
-			refObject.DisplayLayout("Reference");
-			name.DisplayLayout("name");
+			lhs.DisplayLayout("lhs");
+			rhs.DisplayLayout("rhs");
 			returnVar.DisplayLayout("Return");
 		}
 #endif
