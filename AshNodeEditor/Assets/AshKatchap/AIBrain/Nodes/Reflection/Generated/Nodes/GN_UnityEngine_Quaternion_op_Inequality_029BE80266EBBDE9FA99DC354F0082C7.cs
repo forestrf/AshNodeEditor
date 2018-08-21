@@ -8,7 +8,7 @@ using Ashkatchap.AIBrain.Nodes;
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
 	[CreateNode("Actuator/UnityEngine/Quaternion/op_Inequality (Quaternion lhs, Quaternion rhs) : Boolean")]
-	public class GN_UnityEngine_Quaternion_op_Inequality_UnityEngine_Quaternion__UnityEngine_Quaternion : Node {
+	public class GN_UnityEngine_Quaternion_op_Inequality_029BE80266EBBDE9FA99DC354F0082C7 : Node {
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Quaternion lhs;
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Quaternion rhs;
 

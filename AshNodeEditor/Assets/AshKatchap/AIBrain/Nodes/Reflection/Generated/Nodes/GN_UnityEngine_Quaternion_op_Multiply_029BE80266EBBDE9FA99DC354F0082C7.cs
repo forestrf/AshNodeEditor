@@ -7,17 +7,19 @@ using Ashkatchap.AIBrain.Nodes;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
-	[CreateNode("Actuator/UnityEngine/Quaternion/Inverse (Quaternion rotation) : Quaternion")]
-	public class GN_UnityEngine_Quaternion_Inverse_UnityEngine_Quaternion : Node {
-		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Quaternion rotation;
+	[CreateNode("Actuator/UnityEngine/Quaternion/op_Multiply (Quaternion lhs, Quaternion rhs) : Quaternion")]
+	public class GN_UnityEngine_Quaternion_op_Multiply_029BE80266EBBDE9FA99DC354F0082C7 : Node {
+		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Quaternion lhs;
+		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Quaternion rhs;
 
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Output_UnityEngine_Quaternion returnVar;
 
 
 #if UNITY_EDITOR
 		public override void Init() {
-			SetName("Inverse");
-			rotation = CreateIO<Input_UnityEngine_Quaternion>();
+			SetName("*");
+			lhs = CreateIO<Input_UnityEngine_Quaternion>();
+			rhs = CreateIO<Input_UnityEngine_Quaternion>();
 			returnVar = CreateIO<Output_UnityEngine_Quaternion>();
 		}
 #endif
@@ -29,12 +31,13 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 		}
 
 		public override void Calculate() {
-			returnVar.SetValue(UnityEngine.Quaternion.Inverse(rotation.GetValue()));
+			returnVar.SetValue(lhs.GetValue()*rhs.GetValue());
 		}
 
 #if UNITY_EDITOR
 		protected override void Draw() {
-			rotation.DisplayLayout("rotation");
+			lhs.DisplayLayout("lhs");
+			rhs.DisplayLayout("rhs");
 			returnVar.DisplayLayout("Return");
 		}
 #endif

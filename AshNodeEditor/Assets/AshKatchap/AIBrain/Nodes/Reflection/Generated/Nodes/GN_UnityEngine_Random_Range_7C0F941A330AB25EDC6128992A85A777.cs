@@ -7,20 +7,20 @@ using Ashkatchap.AIBrain.Nodes;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
-	[CreateNode("Actuator/UnityEngine/Random/Range (Int32 min, Int32 max) : Int32")]
-	public class GN_UnityEngine_Random_Range_System_Int32__System_Int32 : Node {
-		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_System_Int32 min;
-		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_System_Int32 max;
+	[CreateNode("Actuator/UnityEngine/Random/Range (Single min, Single max) : Single")]
+	public class GN_UnityEngine_Random_Range_7C0F941A330AB25EDC6128992A85A777 : Node {
+		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_System_Single min;
+		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_System_Single max;
 
-		[HideInNormalInspector] [UnityEngine.SerializeField] public Output_System_Int32 returnVar;
+		[HideInNormalInspector] [UnityEngine.SerializeField] public Output_System_Single returnVar;
 
 
 #if UNITY_EDITOR
 		public override void Init() {
 			SetName("Range");
-			min = CreateIO<Input_System_Int32>();
-			max = CreateIO<Input_System_Int32>();
-			returnVar = CreateIO<Output_System_Int32>();
+			min = CreateIO<Input_System_Single>();
+			max = CreateIO<Input_System_Single>();
+			returnVar = CreateIO<Output_System_Single>();
 		}
 #endif
 

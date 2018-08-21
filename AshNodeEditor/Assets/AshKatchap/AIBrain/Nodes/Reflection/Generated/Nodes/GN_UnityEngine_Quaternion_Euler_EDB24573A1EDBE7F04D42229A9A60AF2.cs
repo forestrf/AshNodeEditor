@@ -8,7 +8,7 @@ using Ashkatchap.AIBrain.Nodes;
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
 	[CreateNode("Actuator/UnityEngine/Quaternion/Euler (Vector3 euler) : Quaternion")]
-	public class GN_UnityEngine_Quaternion_Euler_UnityEngine_Vector3 : Node {
+	public class GN_UnityEngine_Quaternion_Euler_EDB24573A1EDBE7F04D42229A9A60AF2 : Node {
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 euler;
 
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Output_UnityEngine_Quaternion returnVar;

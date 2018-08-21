@@ -8,7 +8,7 @@ using Ashkatchap.AIBrain.Nodes;
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
 	[CreateNode("Actuator/UnityEngine/Quaternion/op_Multiply (Quaternion rotation, Vector3 point) : Vector3")]
-	public class GN_UnityEngine_Quaternion_op_Multiply_UnityEngine_Quaternion__UnityEngine_Vector3 : Node {
+	public class GN_UnityEngine_Quaternion_op_Multiply_A2607B0A0DD3F611836C9E58203CE036 : Node {
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Quaternion rotation;
 		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_UnityEngine_Vector3 point;
 

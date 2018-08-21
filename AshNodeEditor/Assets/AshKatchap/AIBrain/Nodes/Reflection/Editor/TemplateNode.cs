@@ -44,6 +44,9 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 
 			if (useReference) {
 				builder.Append("		[HideInNormalInspector] [UnityEngine.SerializeField] public Input_" + TemplateIO.GetIOName(memberInfo.DeclaringType) + " refObject;\n");
+				if (memberInfo.DeclaringType.IsValueType) {
+					builder.Append("		[HideInNormalInspector] [UnityEngine.SerializeField] public Output_" + TemplateIO.GetIOName(memberInfo.DeclaringType) + " newRefObject;\n");
+				}
 			}
 
 			bool isSpecialSetMethod = memberInfo.MemberType == MemberTypes.Method && (memberInfo as MethodInfo).IsSpecialName && memberInfo.Name.StartsWith("set_");
@@ -108,6 +111,9 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 			builder.Append("			SetName(\"" + nodeName + "\");\n");
 			if (useReference) {
 				builder.Append("			refObject = " + CreateIOConstructorParam(memberInfo.DeclaringType, "Input") + ";\n");
+				if (memberInfo.DeclaringType.IsValueType) {
+					builder.Append("			newRefObject = " + CreateIOConstructorParam(memberInfo.DeclaringType, "Output") + ";\n");
+				}
 			}
 			foreach (var i in input) {
 				builder.Append("			" + i.Key + " = " + CreateIOConstructorParam(i.Value, "Input") + ";\n");
@@ -165,6 +171,9 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 			builder.Append("		protected override void Draw() {\n");
 			if (useReference) {
 				builder.Append("			refObject.DisplayLayout(\"Reference\");\n");
+				if (memberInfo.DeclaringType.IsValueType) {
+					builder.Append("			newRefObject.DisplayLayout(\"Reference\");\n");
+				}
 			}
 
 			if (memberInfo.MemberType == MemberTypes.Method) {
@@ -211,9 +220,22 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 			if (methodHasReturn) {
 				builder.Append("returnVar.SetValue(");
 			}
+			else if (useReference && memberInfo.DeclaringType.IsValueType) {
+				builder.Append(memberInfo.DeclaringType.FullName + " tmp = refObject.GetValue();\n			");
+			}
 			if (memberInfo.MemberType != MemberTypes.Method || !((MethodInfo) memberInfo).IsSpecialName || !memberInfo.Name.StartsWith("op_")) {
 				if (useReference) {
-					builder.Append("(refObject.GetValue() as " + memberInfo.DeclaringType.FullName + ").");
+					if (memberInfo.DeclaringType.IsValueType) {
+						if (!methodHasReturn) {
+							builder.Append("tmp.");
+						}
+						else {
+							builder.Append("refObject.GetValue().");
+						}
+					}
+					else {
+						builder.Append("(refObject.GetValue() as " + memberInfo.DeclaringType.FullName + ").");
+					}
 				} else {
 					builder.Append(memberInfo.DeclaringType.FullName + ".");
 				}
@@ -258,6 +280,10 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 				if (parameters[i].IsOut) {
 					builder.Append(parameters[i].Name + ".SetValue(out_" + parameters[i].Name + ");\n");
 				}
+			}
+
+			if (useReference && memberInfo.DeclaringType.IsValueType && !methodHasReturn) {
+				builder.Append("			newRefObject.SetValue(tmp);\n");
 			}
 		}
 

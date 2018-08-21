@@ -62,7 +62,10 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 								if (inside) WantedStructs.Remove(type);
 								else WantedStructs.Add(type);
 							}
-
+							/*
+							GUILayout.Label("Constructors", EditorStyles.boldLabel);
+							// TO DO
+							*/
 							GUILayout.Label("Methods", EditorStyles.boldLabel);
 							foreach (var elem in currentTypeMethods) {
 								inside = WantedMembers.Contains(elem);
