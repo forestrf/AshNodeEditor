@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Reflection;
+﻿using System;
 using System.Collections.Generic;
-using System;
-using System.Linq;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	public class GeneratorWindow : EditorWindow {
@@ -47,7 +47,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 				scroll = GUILayout.BeginScrollView(scroll, false, true);
 				foreach (var type in TypeFinder.Types) {
 					if (search == "" || type.FullName.ToLower().Contains(searchLower)) {
-						if (GUILayout.Button(type.FullName, buttonStyle)) {
+						if (GUILayoutCull.Button(position, scroll, type.FullName, buttonStyle)) {
 							clickedType = clickedType == type ? null : type;
 
 							if (clickedType == type) {
