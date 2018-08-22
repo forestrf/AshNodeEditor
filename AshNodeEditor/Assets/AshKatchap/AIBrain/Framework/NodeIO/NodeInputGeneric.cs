@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Ashkatchap.Shared;
 using System;
-using Ashkatchap.Shared;
+using UnityEngine;
 
 namespace Ashkatchap.AIBrain.Nodes {
 	[Serializable]
@@ -42,6 +42,11 @@ namespace Ashkatchap.AIBrain.Nodes {
 #endif
 				return defaultValue;
 			}
+		}
+
+		public T GetCachedValue() {
+			var vv = nodeOutput as NodeOutput<T>;
+			return nodeOutput != null ? vv.value : defaultValue;
 		}
 
 		public override object GetValueAsObject() {

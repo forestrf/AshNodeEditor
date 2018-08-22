@@ -107,7 +107,7 @@ namespace Ashkatchap.AIBrain {
 			private Node Peek() {
 				return stack[stackSize - 1];
 			}
-			private void Push(Node node) {
+			public void Push(Node node) {
 				stack[stackSize++] = node;
 			}
 			private Node Pop() {
@@ -128,6 +128,16 @@ namespace Ashkatchap.AIBrain {
 					}
 				}
 			}
+
+			public bool StackHasNodes() {
+				return stackSize > 0;
+			}
+
+			public void Clear() {
+				while (stackSize > 0) {
+					Pop().InterruptExecution();
+				}
+			}
 		}
 	}
 
@@ -145,7 +155,7 @@ namespace Ashkatchap.AIBrain {
 		/// </summary>
 		Failure,
 		/// <summary>
-		/// This node wants to stop the execution of the tree for now and wants to continue running from it in the next tick
+		/// This node wants to stop the execution of the tree for now and wants to be executed again in the next tick
 		/// </summary>
 		StopExecutionAtMe,
 		/// <summary>

@@ -2,8 +2,8 @@
 using Ashkatchap.AIBrain.Nodes;
 using Ashkatchap.Shared;
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Ashkatchap.AIBrain {
 	[Serializable]
@@ -111,7 +111,7 @@ namespace Ashkatchap.AIBrain {
 		protected override void Draw() {
 			UnityEditor.EditorGUIUtility.fieldWidth = 25;
 			UnityEditor.EditorGUIUtility.labelWidth = 100;
-			firstScoreWins.DisplayLayout(firstScoreWins.GetValue() ? new GUIContent("First wins", "First score greater than 0 will be selected") : new GUIContent("Higher wins", "Highest value greather than 0 will be selected"));
+			firstScoreWins.DisplayLayout(firstScoreWins.GetCachedValue() ? new GUIContent("First wins", "First score greater than 0 will be selected") : new GUIContent("Higher wins", "Highest value greather than 0 will be selected"));
 			checkContinually.DisplayLayout("Test Continually");
 
 			UnityEditor.EditorGUIUtility.labelWidth = 25;

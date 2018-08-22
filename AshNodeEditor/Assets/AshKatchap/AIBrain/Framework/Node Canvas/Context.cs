@@ -13,8 +13,8 @@ namespace Ashkatchap.AIBrain {
 		[HideInNormalInspector] [SerializeField] private Transform _groupsGO;
 
 #if UNITY_EDITOR
-		[NonSerialized] public Vector2 scrollOffset;
-		[NonSerialized] public Zoom zoom = new Zoom();
+		[HideInNormalInspector] [SerializeField] public Vector2 scrollOffset;
+		[HideInNormalInspector] [SerializeField] public Zoom zoom = new Zoom();
 		
 		public const string NAME_nodesGO = "Nodes", NAME_ioGO = "Connections", NAME_groupsGO = "Groups";
 		

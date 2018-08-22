@@ -423,6 +423,7 @@ namespace Ashkatchap.AIBrain {
 				if (GUILayout.Button("-")) curDebugStep--;
 				if (GUILayout.Button("+")) curDebugStep++;
 				GUILayout.EndHorizontal();
+				if (!nodeCanvas.stepByStep) curDebugStep = 0;
 				curDebugStep = EditorGUILayout.IntSlider(curDebugStep, 0, nodeCanvas.calledElementsInOrder.Count - 1);
 				
 				if (nodeCanvas.calledElementsInOrder.Count > 0 && startCurDebugStep != curDebugStep) {
