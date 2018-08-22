@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System;
-using Ashkatchap.AIBrain.Nodes;
+﻿using Ashkatchap.AIBrain.Nodes;
 using Ashkatchap.Shared;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Ashkatchap.AIBrain {
 	public partial class Context : MonoBehaviour {
@@ -96,17 +96,20 @@ namespace Ashkatchap.AIBrain {
 		public class Zoom {
 			[Range(0, 1)]
 			public float zoomEffectDuration = 0.2f;
-			public float zoom { get; private set; }
+			private float _zoom = 1;
 			public bool IsZooming { get; private set; }
+			public float GetZoom() {
+				return _zoom;
+			}
 
 			private float targetZoom = 1;
 			private float previousZoom = 1;
 			private float timeZoomRequested = 0;
 
 			public void GUIUpdate(UnityEditor.EditorWindow window) {
-				zoom = Mathf.Lerp(previousZoom, targetZoom, (Time.realtimeSinceStartup - timeZoomRequested) / zoomEffectDuration);
+				_zoom = Mathf.Lerp(previousZoom, targetZoom, (Time.realtimeSinceStartup - timeZoomRequested) / zoomEffectDuration);
 				if (Event.current.type == EventType.Repaint) {
-					if (zoom == targetZoom) {
+					if (_zoom == targetZoom) {
 						IsZooming = false;
 					} else {
 						window.Repaint();
@@ -118,7 +121,7 @@ namespace Ashkatchap.AIBrain {
 				targetZoom *= multiplier;
 				if (targetZoom > 1) targetZoom = 1;
 				if (previousTargetZoom != targetZoom) {
-					previousZoom = zoom;
+					previousZoom = _zoom;
 					IsZooming = true;
 					timeZoomRequested = Time.realtimeSinceStartup;
 				}

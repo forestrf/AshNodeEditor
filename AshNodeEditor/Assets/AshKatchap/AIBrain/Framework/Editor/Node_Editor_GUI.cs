@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Ashkatchap.AIBrain {
 	public class Node_Editor_GUI : EditorWindow {
+		[SerializeField]
+		private int nodeCanvasInstanceId;
+
 		public Context nodeCanvas;
 
 		public const string editorPath = "Assets/Ashkatchap/AIBrain/";
@@ -147,22 +150,31 @@ namespace Ashkatchap.AIBrain {
 		public void OnGUI() {
 			checkInit();
 
-			guiInfo = new GUI_Info(scrollWindow, knobSize, null != nodeCanvas ? nodeCanvas.zoom.zoom : 1);
+			if (0 != nodeCanvasInstanceId) {
+				nodeCanvas = EditorUtility.InstanceIDToObject(nodeCanvasInstanceId) as Context;
+				if (null == nodeCanvas) {
+					nodeCanvasInstanceId = 0;
+				}
+			}
+
+			guiInfo = new GUI_Info(scrollWindow, knobSize, null != nodeCanvas ? nodeCanvas.zoom.GetZoom() : 1);
 
 			nodeCanvas = (Context) EditorGUILayout.ObjectField(nodeCanvas, typeof(Context), true);
 
 			if (nodeCanvas == null) return;
+
+			nodeCanvasInstanceId = nodeCanvas.GetInstanceID();
 
 			SetEditorColor();
 
 			try {
 				// Draw Background when Repainting
 				if (Event.current.type == EventType.Repaint) { // Draw background when repainting
-					float w = GUI_Info.Background.width * nodeCanvas.zoom.zoom;
-					float h = GUI_Info.Background.height * nodeCanvas.zoom.zoom;
+					float w = GUI_Info.Background.width * nodeCanvas.zoom.GetZoom();
+					float h = GUI_Info.Background.height * nodeCanvas.zoom.GetZoom();
 
-					Vector2 offset = new Vector2((nodeCanvas.scrollOffset.x * nodeCanvas.zoom.zoom) % w - w,
-													(nodeCanvas.scrollOffset.y * nodeCanvas.zoom.zoom) % h - h);
+					Vector2 offset = new Vector2((nodeCanvas.scrollOffset.x * nodeCanvas.zoom.GetZoom()) % w - w,
+													(nodeCanvas.scrollOffset.y * nodeCanvas.zoom.GetZoom()) % h - h);
 					int tileX = Mathf.CeilToInt((position.width + (w - offset.x)) / w);
 					int tileY = Mathf.CeilToInt((position.height + (h - offset.y)) / h);
 
@@ -179,13 +191,13 @@ namespace Ashkatchap.AIBrain {
 				GUI.EndGroup();
 
 				// The Rect of the new clipping group to draw our nodes in
-				Rect ScaledCanvasRect = new Rect(0, 23, (position.width - sideWindowRect.width) / nodeCanvas.zoom.zoom, position.height / nodeCanvas.zoom.zoom);
+				Rect ScaledCanvasRect = new Rect(0, 23, (position.width - sideWindowRect.width) / nodeCanvas.zoom.GetZoom(), position.height / nodeCanvas.zoom.GetZoom());
 
 				// Now continue drawing using the new clipping group
 				GUI.BeginGroup(ScaledCanvasRect);
 
-				// Aplicar zoom
-				GUIUtility.ScaleAroundPivot(Vector2.one * nodeCanvas.zoom.zoom, Vector2.zero);
+				// Apply zoom
+				GUIUtility.ScaleAroundPivot(Vector2.one * nodeCanvas.zoom.GetZoom(), Vector2.zero);
 
 
 				// Draw groups
@@ -205,7 +217,7 @@ namespace Ashkatchap.AIBrain {
 				int i = -1;
 				foreach (var node in nodeCanvas.GetNodes()) {
 					i++;
-					if (!node.CalculateVisibility(position.size / nodeCanvas.zoom.zoom)) {
+					if (!node.CalculateVisibility(position.size / nodeCanvas.zoom.GetZoom())) {
 						GUILayout.Window(i, node.rectPixelCorrected, DrawNode, node.GetName(), GUI_Info.nodeStyle);
 					} else {
 						Color originalColor = GUI.backgroundColor;
