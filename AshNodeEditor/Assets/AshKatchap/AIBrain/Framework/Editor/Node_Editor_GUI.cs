@@ -150,16 +150,16 @@ namespace Ashkatchap.AIBrain {
 		public void OnGUI() {
 			checkInit();
 
-			if (0 != nodeCanvasInstanceId) {
+			guiInfo = new GUI_Info(scrollWindow, knobSize, null != nodeCanvas ? nodeCanvas.zoom.GetZoom() : 1);
+
+			nodeCanvas = (Context) EditorGUILayout.ObjectField(nodeCanvas, typeof(Context), true);
+			
+			if (nodeCanvas == null && 0 != nodeCanvasInstanceId) {
 				nodeCanvas = EditorUtility.InstanceIDToObject(nodeCanvasInstanceId) as Context;
 				if (null == nodeCanvas) {
 					nodeCanvasInstanceId = 0;
 				}
 			}
-
-			guiInfo = new GUI_Info(scrollWindow, knobSize, null != nodeCanvas ? nodeCanvas.zoom.GetZoom() : 1);
-
-			nodeCanvas = (Context) EditorGUILayout.ObjectField(nodeCanvas, typeof(Context), true);
 
 			if (nodeCanvas == null) return;
 
