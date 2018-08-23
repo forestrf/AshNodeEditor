@@ -63,15 +63,18 @@ namespace Ashkatchap.AIBrain {
 					if (result == ExecutionResult.Exit) {
 						while (stackSize > 0) Pop();
 						break;
-					} else if (result == ExecutionResult.Failure) {
-					} else if (result == ExecutionResult.Success) {
+					}
+					else if (result == ExecutionResult.Failure) {
+					}
+					else if (result == ExecutionResult.Success) {
 						if (newNodeTree != null && newNodeTree.outputNode != null) {
 #if UNITY_EDITOR
 							newNodeTree.lastExecutedTime = Time.time;
 #endif
 							Push(newNodeTree.outputNode);
 						}
-					} else {
+					}
+					else {
 						Push(node);
 						if (newNodeTree != null && newNodeTree.outputNode != null) {
 #if UNITY_EDITOR
@@ -81,7 +84,8 @@ namespace Ashkatchap.AIBrain {
 						}
 						if (result == ExecutionResult.StopExecutionAtMe) {
 							break;
-						} else {
+						}
+						else {
 							result = ExecutionResult.Success;
 						}
 					}

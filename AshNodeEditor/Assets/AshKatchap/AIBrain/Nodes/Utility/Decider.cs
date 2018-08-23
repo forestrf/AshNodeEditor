@@ -16,7 +16,7 @@ namespace Ashkatchap.AIBrain {
 
 		[NonSerialized] int lastWinner = -1;
 		[NonSerialized] bool waiting = false;
-		
+
 
 		public override NodeTreeOutput Tick(out ExecutionResult executionResult, ExecutionResult childResult) {
 			if (waiting) {
@@ -30,12 +30,14 @@ namespace Ashkatchap.AIBrain {
 				executionResult = ExecutionResult.Failure;
 				waiting = false;
 				return null;
-			} else {
+			}
+			else {
 				if (checkContinually.GetValue()) {
 					executionResult = ExecutionResult.Running;
 					AddAsInterruptor();
 					waiting = true;
-				} else {
+				}
+				else {
 					executionResult = ExecutionResult.Success;
 					waiting = false;
 				}
@@ -59,7 +61,8 @@ namespace Ashkatchap.AIBrain {
 						return i;
 					}
 				}
-			} else {
+			}
+			else {
 				int winner = -1;
 				float winnerScore = 0;
 				for (int i = 0; i < scoreInputs.Length; i++) {
@@ -73,7 +76,7 @@ namespace Ashkatchap.AIBrain {
 					return winner;
 				}
 			}
-			
+
 			return -1;
 		}
 
@@ -89,10 +92,12 @@ namespace Ashkatchap.AIBrain {
 				int winner = GetWinner();
 				if (lastWinner != winner) {
 					return true;
-				} else {
+				}
+				else {
 					return false;
 				}
-			} else {
+			}
+			else {
 				return false;
 			}
 		}

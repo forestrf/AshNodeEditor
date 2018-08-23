@@ -15,7 +15,8 @@ namespace Ashkatchap.AIBrain {
 				waiting = false;
 				executionResult = ExecutionResult.Running;
 				return child;
-			} else {
+			}
+			else {
 				InterruptExecution();
 				executionResult = ExecutionResult.Success;
 				return null;

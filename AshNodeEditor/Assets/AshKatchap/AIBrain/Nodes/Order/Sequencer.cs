@@ -13,12 +13,14 @@ namespace Ashkatchap.AIBrain {
 				if (childResult == ExecutionResult.Success) {
 					executionResult = ExecutionResult.Running;
 					return treeOutputs[nextChild++];
-				} else {
+				}
+				else {
 					executionResult = ExecutionResult.Failure;
 					InterruptExecution();
 					return null;
 				}
-			} else {
+			}
+			else {
 				executionResult = childResult;
 				InterruptExecution();
 				return null;
@@ -40,7 +42,8 @@ namespace Ashkatchap.AIBrain {
 				GUILayout.BeginVertical();
 				if (GUILayout.Button("-")) {
 					treeOutputs[i].OnDelete();
-				} else {
+				}
+				else {
 					treeOutputs[i].DisplayLayout((i + 1).ToString());
 				}
 				GUILayout.EndVertical();

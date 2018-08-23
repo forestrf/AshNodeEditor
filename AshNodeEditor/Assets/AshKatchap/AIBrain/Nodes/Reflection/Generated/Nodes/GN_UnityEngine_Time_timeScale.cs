@@ -2,8 +2,8 @@
 //// FILE GENERATED AUTOMATICALLY ////
 //////////////////////////////////////
 
-using System;
 using Ashkatchap.AIBrain.Nodes;
+using System;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
@@ -22,13 +22,13 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 #endif
 
 		public override NodeTreeOutput Tick(out ExecutionResult executionResult, ExecutionResult childResult) {
-UnityEngine.Time.timeScale = setter.GetValue();
+			UnityEngine.Time.timeScale = setter.GetValue();
 			executionResult = ExecutionResult.Success;
 			return null;
 		}
 
 		public override void Calculate() {
-				getter.SetValue(UnityEngine.Time.timeScale);
+			getter.value = (UnityEngine.Time.timeScale);
 		}
 
 #if UNITY_EDITOR

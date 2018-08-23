@@ -46,7 +46,7 @@ namespace Ashkatchap.Shared {
 			magnitude = Magnitude(ref v);
 			normalizedDir = v / magnitude;
 		}
-		
+
 		public static float Pow(float num, uint exp) {
 			float result = 1;
 			while (exp > 0) {
@@ -94,7 +94,8 @@ namespace Ashkatchap.Shared {
 			float num = planeNormal.x * planeNormal.x + planeNormal.y * planeNormal.y + planeNormal.z * planeNormal.z;
 			if (num < Mathf.Epsilon) {
 				return vector;
-			} else {
+			}
+			else {
 				return vector - planeNormal * ((vector.x * planeNormal.x + vector.y * planeNormal.y + vector.z * planeNormal.z) / num);
 			}
 		}

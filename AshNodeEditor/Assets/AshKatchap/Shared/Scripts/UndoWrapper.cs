@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Diagnostics;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Ashkatchap.Shared {
@@ -22,7 +22,7 @@ namespace Ashkatchap.Shared {
 			return gameObject.AddComponent<T>();
 #endif
 		}
-		
+
 		[Conditional("UNITY_EDITOR")]
 		public static void ClearUndo(UnityEngine.Object identifier) {
 #if UNITY_EDITOR
@@ -167,7 +167,7 @@ namespace Ashkatchap.Shared {
 			UnityEditor.Undo.SetCurrentGroupName(name);
 #endif
 		}
-		
+
 		public static void SetTransformParent(Transform transform, Transform newParent, string name) {
 #if UNITY_EDITOR
 			if (Application.isPlaying) transform.parent = newParent;

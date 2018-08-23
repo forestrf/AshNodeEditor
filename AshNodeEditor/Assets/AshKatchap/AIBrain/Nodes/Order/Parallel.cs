@@ -30,7 +30,7 @@ namespace Ashkatchap.AIBrain {
 			}
 
 			bool anyStackNoZero = false;
-			for (int i = 0; i <treeOutputs.Length; i++) {
+			for (int i = 0; i < treeOutputs.Length; i++) {
 				var pc = contexts[treeOutputs[i]];
 				if (pc.StackHasNodes()) {
 					anyStackNoZero |= pc.Tick(this.nodeCanvas);
@@ -67,7 +67,8 @@ namespace Ashkatchap.AIBrain {
 				GUILayout.BeginVertical();
 				if (GUILayout.Button("-")) {
 					treeOutputs[i].OnDelete();
-				} else {
+				}
+				else {
 					treeOutputs[i].DisplayLayout((i + 1).ToString());
 				}
 				GUILayout.EndVertical();

@@ -1,7 +1,7 @@
-﻿using Ashkatchap.AIBrain.Nodes;
+﻿using Ashkatchap.AIBrain.GeneratedNodes;
+using Ashkatchap.AIBrain.Nodes;
 using System;
 using UnityEngine;
-using Ashkatchap.AIBrain.GeneratedNodes;
 
 namespace Ashkatchap.AIBrain {
 	[Serializable]
@@ -12,7 +12,7 @@ namespace Ashkatchap.AIBrain {
 
 		public Input_System_Boolean condition;
 		public Input_System_Boolean returnCondition;
-		
+
 		public override NodeTreeOutput Tick(out ExecutionResult executionResult, ExecutionResult childResult) {
 			bool result = condition.GetValue();
 			if (returnCondition.GetValue()) executionResult = result ? ExecutionResult.Success : ExecutionResult.Failure;

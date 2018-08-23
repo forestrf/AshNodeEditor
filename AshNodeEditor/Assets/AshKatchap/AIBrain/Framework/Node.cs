@@ -132,7 +132,7 @@ namespace Ashkatchap.AIBrain {
 		}
 
 		public void SetName(string newName) {
-			this.SetValue("nodeName", newName);
+			this.SetSerializedValue("nodeName", newName);
 		}
 		public string GetName() { return nodeName; }
 
@@ -143,7 +143,7 @@ namespace Ashkatchap.AIBrain {
 		}
 		public void SetCanvasPosition(Vector2 value, GUI_Info info) {
 			if (!info.scrollWindow) {
-				this.SetValue("positionSize", new Rect(value - nodeCanvas.scrollOffset, positionSize.size));
+				this.SetSerializedValue("positionSize", new Rect(value - nodeCanvas.scrollOffset, positionSize.size));
 			}
 		}
 		public Vector2 canvasPosition {
@@ -169,7 +169,8 @@ namespace Ashkatchap.AIBrain {
 			EditorGUIUtility.wideMode = false;
 			try {
 				Draw();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				Debug.LogError(e);
 			}
 		}

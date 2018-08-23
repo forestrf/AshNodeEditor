@@ -11,7 +11,7 @@ namespace Ashkatchap.AIBrain.Nodes {
 #endif
 		{
 		[HideInNormalInspector] [SerializeField] private NodeInput[] nodeInputs = new NodeInput[0];
-		
+
 		public IEnumerable<NodeInput> GetInputs() {
 			return nodeInputs;
 		}

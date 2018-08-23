@@ -8,7 +8,8 @@ namespace Ashkatchap.Shared {
 			Stopwatch s;
 			if (pool.Count > 0) {
 				s = pool.Pop();
-			} else {
+			}
+			else {
 				s = new Stopwatch();
 			}
 			s.Reset();

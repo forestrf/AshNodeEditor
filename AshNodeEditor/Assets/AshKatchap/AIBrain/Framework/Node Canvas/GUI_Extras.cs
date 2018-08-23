@@ -41,7 +41,7 @@ namespace Ashkatchap.AIBrain.Nodes {
 			{ typeof(Quaternion), UnityEngine.Random.ColorHSV(0, 1, 0, 1, 0.5f, 1) },
 			{ typeof(Animator), UnityEngine.Random.ColorHSV(0, 1, 0, 1, 0.5f, 1) },
 		};
-		
+
 		public bool scrollWindow;
 		public int knobSize;
 		public float zoom;

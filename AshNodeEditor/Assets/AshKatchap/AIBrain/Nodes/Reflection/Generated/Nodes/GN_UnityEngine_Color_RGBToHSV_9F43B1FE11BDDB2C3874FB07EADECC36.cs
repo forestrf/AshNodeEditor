@@ -2,8 +2,8 @@
 //// FILE GENERATED AUTOMATICALLY ////
 //////////////////////////////////////
 
-using System;
 using Ashkatchap.AIBrain.Nodes;
+using System;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
@@ -33,12 +33,12 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 
 		public override void Calculate() {
 			System.Single out_H;
-System.Single out_S;
-System.Single out_V;
-UnityEngine.Color.RGBToHSV(rgbColor.GetValue(), out out_H, out out_S, out out_V);
-H.SetValue(out_H);
-S.SetValue(out_S);
-V.SetValue(out_V);
+			System.Single out_S;
+			System.Single out_V;
+			UnityEngine.Color.RGBToHSV(rgbColor.GetValue(), out out_H, out out_S, out out_V);
+			H.value = (out_H);
+			S.value = (out_S);
+			V.value = (out_V);
 		}
 
 #if UNITY_EDITOR

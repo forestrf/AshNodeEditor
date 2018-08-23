@@ -2,8 +2,8 @@
 //// FILE GENERATED AUTOMATICALLY ////
 //////////////////////////////////////
 
-using System;
 using Ashkatchap.AIBrain.Nodes;
+using System;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
@@ -21,7 +21,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 #endif
 
 		public override void Calculate() {
-			valueOutput.SetValue(value);
+			valueOutput.value = value;
 		}
 
 		public override NodeInput GetInput() { return valueInput; }

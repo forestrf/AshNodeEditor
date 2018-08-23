@@ -19,15 +19,18 @@ namespace Ashkatchap.AIBrain {
 				if (childResult == ExecutionResult.Success) {
 					if (repDone == 0) {
 						executionResult = ExecutionResult.StopExecutionAtMe;
-					} else {
+					}
+					else {
 						executionResult = ExecutionResult.Running;
 					}
 					return child;
-				} else {
+				}
+				else {
 					executionResult = ExecutionResult.Failure;
 					return null;
 				}
-			} else {
+			}
+			else {
 				InterruptExecution();
 				executionResult = ExecutionResult.Success;
 				return null;

@@ -73,7 +73,7 @@ public static class Util {
 	public static Vector2 YZ(this Vector3 v) { return new Vector2(v.y, v.z); }
 	public static Vector2 ZX(this Vector3 v) { return new Vector2(v.z, v.x); }
 	public static Vector2 ZY(this Vector3 v) { return new Vector2(v.z, v.y); }
-	
+
 	public static Vector2 YX(this Vector2 v) { return new Vector2(v.y, v.x); }
 
 

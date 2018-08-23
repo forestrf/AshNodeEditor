@@ -4,22 +4,28 @@ using UnityEngine;
 namespace Ashkatchap.AIBrain.Nodes {
 	[Serializable]
 	public abstract class NodeOutput<T> : NodeOutput {
+#if UNITY_EDITOR
+		private T _value;
+		public T value {
+			set {
+				lastExecutedTime = Time.time;
+				if (body.nodeCanvas.debug) body.nodeCanvas.AddCalledElementInOrder(new HistoryElement(this, "Value Setted: " + (value == null ? "Null" : value.ToString())));
+				_value = value;
+			}
+			get {
+				return _value;
+			}
+		}
+#else
 		public T value;
+#endif
 
 		public override void SetFromInput(NodeInput input) {
-			SetValue((input as NodeInput<T>).GetValue());
-		}
-
-		public void SetValue(T value) {
-#if UNITY_EDITOR
-			lastExecutedTime = Time.time;
-			if (body.nodeCanvas.debug) body.nodeCanvas.AddCalledElementInOrder(new HistoryElement(this, "Value Setted: " + (value == null ? "Null" : value.ToString())));
-#endif
-			this.value = value;
+			value = (input as NodeInput<T>).GetValue();
 		}
 
 		public override object GetValueAsObject() {
-			return value;
+			return _value;
 		}
 
 #if UNITY_EDITOR

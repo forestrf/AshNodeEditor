@@ -1,10 +1,10 @@
-﻿using Ashkatchap.AIBrain.Nodes;
-using System;
-using Ashkatchap.AIBrain.GeneratedNodes;
-using UnityEngine;
-using System.Reflection;
-using System.Linq;
+﻿using Ashkatchap.AIBrain.GeneratedNodes;
+using Ashkatchap.AIBrain.Nodes;
 using Ashkatchap.Shared;
+using System;
+using System.Linq;
+using System.Reflection;
+using UnityEngine;
 
 namespace Ashkatchap.AIBrain {
 	[Serializable]
@@ -13,7 +13,7 @@ namespace Ashkatchap.AIBrain {
 		public ValueBase variable;
 		public NodeInput input; // Use reflection to create
 		public NodeOutput output; // Use reflection to create
-		
+
 		public override NodeTreeOutput Tick(out ExecutionResult executionResult, ExecutionResult childResult) {
 			executionResult = ExecutionResult.Success;
 			variable.SetValueFromInput(input);
@@ -39,7 +39,7 @@ namespace Ashkatchap.AIBrain {
 			this.LayoutPropertyField("variable");
 
 			UpdateIOWithSource();
-			
+
 			GUILayout.BeginHorizontal();
 			UnityEditor.EditorGUIUtility.labelWidth = 1;
 			input.DisplayLayout(GUIContent.none);
@@ -64,7 +64,8 @@ namespace Ashkatchap.AIBrain {
 						output.OnDelete();
 						input = CreateIO(inputNewType) as NodeInput;
 						output = CreateIO(outputNewType) as NodeOutput;
-					} else {
+					}
+					else {
 						variable.SetValueAsObject(null);
 					}
 				}

@@ -29,7 +29,7 @@ namespace Ashkatchap.AIBrain {
 
 #if UNITY_EDITOR
 		public void SetFirstNode(Node node) {
-			this.SetValue("firstNode", node);
+			this.SetSerializedValue("firstNode", node);
 		}
 #endif
 	}

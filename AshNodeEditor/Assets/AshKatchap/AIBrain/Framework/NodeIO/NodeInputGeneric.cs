@@ -33,10 +33,12 @@ namespace Ashkatchap.AIBrain.Nodes {
 				var vv = nodeOutput as NodeOutput<T>;
 				if (vv == null) {
 					return (T) nodeOutput.GetValueAsObject();
-				} else {
+				}
+				else {
 					return vv.value;
 				}
-			} else {
+			}
+			else {
 #if UNITY_EDITOR
 				if (body.nodeCanvas.debug) body.nodeCanvas.AddCalledElementInOrder(new HistoryElement(this, "Value Default: " + defaultValue.ToString()));
 #endif
@@ -84,7 +86,8 @@ namespace Ashkatchap.AIBrain.Nodes {
 			UndoWrapper.RecordObject(this, "SetDefaultValue");
 			if (defaultValue == null) {
 				this.defaultValue = default(T);
-			} else {
+			}
+			else {
 				this.defaultValue = (T) defaultValue;
 			}
 		}

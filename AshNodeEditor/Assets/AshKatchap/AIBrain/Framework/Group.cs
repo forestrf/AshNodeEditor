@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using Ashkatchap.AIBrain.Nodes;
 using Ashkatchap.Shared;
-using Ashkatchap.AIBrain.Nodes;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Ashkatchap.AIBrain {
 	public class Group : MonoBehaviour, IChangeableName {
@@ -35,7 +35,8 @@ namespace Ashkatchap.AIBrain {
 						b.Encapsulate(node.positionSize.position + node.positionSize.size);
 					}
 					oldRect = new Rect(b.min.XY() - border, b.max.XY() - b.min.XY() + border * 2);
-				} else {
+				}
+				else {
 					oldRect = new Rect();
 				}
 				needsUpdate = false;
@@ -60,7 +61,7 @@ namespace Ashkatchap.AIBrain {
 		}
 
 		public void SetName(string newName) {
-			this.SetValue("groupName", newName);
+			this.SetSerializedValue("groupName", newName);
 		}
 
 		public void AddNode(Node node) {
@@ -94,10 +95,10 @@ namespace Ashkatchap.AIBrain {
 			get { return new Vector2((int) CanvasPosition.x, (int) CanvasPosition.y); }
 		}
 
-		[SerializeField] private Color color = new Color(128/255f, 0, 195/255f);
-		
+		[SerializeField] private Color color = new Color(128 / 255f, 0, 195 / 255f);
+
 		public void SetColor(Color color) {
-			this.SetValue("color", color);
+			this.SetSerializedValue("color", color);
 		}
 
 		public void AddDelta(Vector2 delta, GUI_Info info) {
@@ -115,7 +116,8 @@ namespace Ashkatchap.AIBrain {
 			CheckArray();
 			if (nodes.Length == 0) {
 				OnDelete();
-			} else {
+			}
+			else {
 				if (boxStyle == null || boxStyle.normal.background == null) {
 					boxStyle = new GUIStyle(GUI.skin.box);
 					boxStyle.normal.background = ColorToTex(new Color(1, 1, 1, 1), new Color(1, 1, 1, 0.3f));
@@ -130,7 +132,7 @@ namespace Ashkatchap.AIBrain {
 				r.size = PositionSize.size;
 				GUI.Box(r, groupName, boxStyle);
 				GUI.backgroundColor = originalColor;
-				
+
 				Rect rColor = RectPixelCorrected;
 				rColor.size = new Vector2(40, 20);
 				rColor.x += PositionSize.size.x - 40;
@@ -141,10 +143,10 @@ namespace Ashkatchap.AIBrain {
 						boxStyle.normal.textColor = GetTextColor(color);
 					}
 				}
-				catch (ExitGUIException ex) { }
+				catch (ExitGUIException) { }
 			}
 		}
-		
+
 		/// <summary>
 		/// Create a 1x1 tex with color col
 		/// </summary>

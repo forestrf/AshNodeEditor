@@ -1,5 +1,5 @@
-﻿using System;
-using Ashkatchap.AIBrain.Nodes;
+﻿using Ashkatchap.AIBrain.Nodes;
+using System;
 
 namespace Ashkatchap.AIBrain {
 	[Serializable]
@@ -15,7 +15,7 @@ namespace Ashkatchap.AIBrain {
 
 		public override void SetValueFromInput(NodeInput input) {
 			value = ((NodeInput<T>) input).GetValue();
-			((NodeOutput<T>) outputs[0]).SetValue(value);
+			((NodeOutput<T>) outputs[0]).value = value;
 		}
 	}
 }

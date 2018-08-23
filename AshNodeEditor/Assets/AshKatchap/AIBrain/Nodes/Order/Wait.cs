@@ -12,7 +12,7 @@ namespace Ashkatchap.AIBrain {
 		public Input_System_Boolean skipMinimumAFrame;
 
 		private float startTime = 0;
-		
+
 		public override NodeTreeOutput Tick(out ExecutionResult executionResult, ExecutionResult childResult) {
 			if (startTime == 0) {
 				startTime = Time.time;
@@ -25,7 +25,8 @@ namespace Ashkatchap.AIBrain {
 				executionResult = ExecutionResult.Success;
 				InterruptExecution();
 				return child;
-			} else {
+			}
+			else {
 				executionResult = ExecutionResult.StopExecutionAtMe;
 				return null;
 			}

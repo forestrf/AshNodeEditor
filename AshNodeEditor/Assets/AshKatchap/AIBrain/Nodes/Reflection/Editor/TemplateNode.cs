@@ -152,7 +152,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 			builder.Append("		public override void Calculate() {");
 			if (canRead) {
 				builder.Append("\n");
-				builder.Append("				getter.SetValue(");
+				builder.Append("				getter.value = (");
 				if (useReference) {
 					builder.Append("((" + memberInfo.DeclaringType.FullName + ") refObject.GetValue()).");
 				} else {
@@ -218,7 +218,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 
 
 			if (methodHasReturn) {
-				builder.Append("returnVar.SetValue(");
+				builder.Append("returnVar.value = (");
 			}
 			else if (useReference && memberInfo.DeclaringType.IsValueType) {
 				builder.Append(memberInfo.DeclaringType.FullName + " tmp = refObject.GetValue();\n			");
@@ -278,12 +278,12 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 
 			for (int i = 0; i < parameters.Length; i++) {
 				if (parameters[i].IsOut) {
-					builder.Append(parameters[i].Name + ".SetValue(out_" + parameters[i].Name + ");\n");
+					builder.Append(parameters[i].Name + ".value = (out_" + parameters[i].Name + ");\n");
 				}
 			}
 
 			if (useReference && memberInfo.DeclaringType.IsValueType && !methodHasReturn) {
-				builder.Append("			newRefObject.SetValue(tmp);\n");
+				builder.Append("			newRefObject.value = tmp;\n");
 			}
 		}
 

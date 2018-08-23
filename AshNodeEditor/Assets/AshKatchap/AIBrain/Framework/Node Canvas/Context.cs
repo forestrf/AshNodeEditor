@@ -15,9 +15,9 @@ namespace Ashkatchap.AIBrain {
 #if UNITY_EDITOR
 		[HideInNormalInspector] [SerializeField] public Vector2 scrollOffset;
 		[HideInNormalInspector] [SerializeField] public Zoom zoom = new Zoom();
-		
+
 		public const string NAME_nodesGO = "Nodes", NAME_ioGO = "Connections", NAME_groupsGO = "Groups";
-		
+
 		public void AddNode(Node node) {
 			this.Add("nodes", node);
 		}
@@ -78,7 +78,7 @@ namespace Ashkatchap.AIBrain {
 		[NonSerialized] public bool debug = false;
 		[NonSerialized] public bool stepByStep = false;
 		[NonSerialized] private int lastFrame = -1;
-		
+
 		public void AddCalledElementInOrder(HistoryElement element) {
 			if (debug) {
 				if (lastFrame != Time.frameCount) {
@@ -88,11 +88,12 @@ namespace Ashkatchap.AIBrain {
 				calledElementsInOrder.Add(element);
 				if (stepByStep)
 					Debug.Break();
-			} else {
+			}
+			else {
 				calledElementsInOrder.Clear();
 			}
 		}
-		
+
 		public class Zoom {
 			[Range(0, 1)]
 			public float zoomEffectDuration = 0.2f;
@@ -111,7 +112,8 @@ namespace Ashkatchap.AIBrain {
 				if (Event.current.type == EventType.Repaint) {
 					if (_zoom == targetZoom) {
 						IsZooming = false;
-					} else {
+					}
+					else {
 						window.Repaint();
 					}
 				}

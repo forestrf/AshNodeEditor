@@ -11,7 +11,7 @@ namespace Ashkatchap.AIBrain {
 		public Input_System_Single a;
 		public Input_System_Single b;
 		public Output_System_Boolean res;
-		
+
 		public override NodeTreeOutput Tick(out ExecutionResult executionResult, ExecutionResult childResult) {
 			Calculate();
 			executionResult = ExecutionResult.Success;
@@ -19,7 +19,7 @@ namespace Ashkatchap.AIBrain {
 		}
 
 		public override void Calculate() {
-			res.SetValue(a.GetValue() == b.GetValue());
+			res.value = a.GetValue() == b.GetValue();
 		}
 
 #if UNITY_EDITOR

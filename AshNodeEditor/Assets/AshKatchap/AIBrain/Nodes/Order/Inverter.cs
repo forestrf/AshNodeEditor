@@ -15,7 +15,8 @@ namespace Ashkatchap.AIBrain {
 				waiting = false;
 				executionResult = ExecutionResult.Running;
 				return child;
-			} else {
+			}
+			else {
 				InterruptExecution();
 				executionResult = childResult == ExecutionResult.Success ? ExecutionResult.Failure : ExecutionResult.Success;
 				return null;
@@ -30,7 +31,7 @@ namespace Ashkatchap.AIBrain {
 		public override void Init() {
 			child = CreateTreeOutput();
 		}
-		
+
 		protected override void Draw() {
 			GUILayout.BeginHorizontal();
 			child.DisplayLayout("Invert");

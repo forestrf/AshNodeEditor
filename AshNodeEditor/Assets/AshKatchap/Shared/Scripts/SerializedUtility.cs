@@ -1,6 +1,6 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Ashkatchap.Shared {
 	public static class SerializedUtility {
@@ -59,105 +59,105 @@ namespace Ashkatchap.Shared {
 			sp.DeleteArrayElementAtIndex(index);
 		}
 
-		public static void SetValue(this Object obj, string variable, Object value) {
+		public static void SetSerializedValue(this Object obj, string variable, Object value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.objectReferenceValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, AnimationCurve value) {
+		public static void SetSerializedValue(this Object obj, string variable, AnimationCurve value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.animationCurveValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, bool value) {
+		public static void SetSerializedValue(this Object obj, string variable, bool value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.boolValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, Bounds value) {
+		public static void SetSerializedValue(this Object obj, string variable, Bounds value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.boundsValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, Color value) {
+		public static void SetSerializedValue(this Object obj, string variable, Color value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.colorValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, double value) {
+		public static void SetSerializedValue(this Object obj, string variable, double value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.doubleValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, float value) {
+		public static void SetSerializedValue(this Object obj, string variable, float value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.floatValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, int value) {
+		public static void SetSerializedValue(this Object obj, string variable, int value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.intValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, long value) {
+		public static void SetSerializedValue(this Object obj, string variable, long value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.longValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, Quaternion value) {
+		public static void SetSerializedValue(this Object obj, string variable, Quaternion value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.quaternionValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, Rect value) {
+		public static void SetSerializedValue(this Object obj, string variable, Rect value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.rectValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, string value) {
+		public static void SetSerializedValue(this Object obj, string variable, string value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.stringValue = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, Vector2 value) {
+		public static void SetSerializedValue(this Object obj, string variable, Vector2 value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.vector2Value = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, Vector3 value) {
+		public static void SetSerializedValue(this Object obj, string variable, Vector3 value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
 			sp.vector3Value = value;
 			so.ApplyModifiedProperties();
 		}
-		public static void SetValue(this Object obj, string variable, Vector4 value) {
+		public static void SetSerializedValue(this Object obj, string variable, Vector4 value) {
 			if (obj == null) return;
 			var so = new SerializedObject(obj);
 			var sp = so.FindProperty(variable);
@@ -174,7 +174,8 @@ namespace Ashkatchap.Shared {
 					EditorGUILayout.PropertyField(sp, label, true);
 				else
 					EditorGUILayout.PropertyField(sp, true);
-			} else {
+			}
+			else {
 				GUILayout.Label("Property " + variable + " not found", EditorStyles.label);
 			}
 			so.ApplyModifiedProperties();

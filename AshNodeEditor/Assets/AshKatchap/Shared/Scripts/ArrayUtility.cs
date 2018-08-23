@@ -59,7 +59,8 @@ public static class ArrayUtility {
 				array[i] = array[l - 1];
 				l--;
 				if (onlyFirstOccurrence) break;
-			} else {
+			}
+			else {
 				i++;
 			}
 		}

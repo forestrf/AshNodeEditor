@@ -16,7 +16,7 @@ namespace Ashkatchap.AIBrain {
 			executionResult = ExecutionResult.Success;
 			return null;
 		}
-		
+
 		public abstract NodeInput GetInput();
 		public abstract NodeOutput GetOutput();
 		public abstract void SetValueFromInput(NodeInput input);

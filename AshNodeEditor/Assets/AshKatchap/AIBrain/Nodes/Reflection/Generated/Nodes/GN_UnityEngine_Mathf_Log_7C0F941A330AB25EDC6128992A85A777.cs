@@ -2,8 +2,8 @@
 //// FILE GENERATED AUTOMATICALLY ////
 //////////////////////////////////////
 
-using System;
 using Ashkatchap.AIBrain.Nodes;
+using System;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
@@ -31,7 +31,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 		}
 
 		public override void Calculate() {
-			returnVar.SetValue(UnityEngine.Mathf.Log(f.GetValue(), p.GetValue()));
+			returnVar.value = (UnityEngine.Mathf.Log(f.GetValue(), p.GetValue()));
 		}
 
 #if UNITY_EDITOR

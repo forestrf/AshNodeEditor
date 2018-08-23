@@ -23,9 +23,9 @@ namespace Ashkatchap.AIBrain.Nodes {
 		}
 
 		public void Set(Node newOutputNode) {
-			if (outputNode != null) outputNode.SetValue("timesLinkedAsTree", outputNode.timesLinkedAsTree - 1);
-			if (newOutputNode != null) newOutputNode.SetValue("timesLinkedAsTree", newOutputNode.timesLinkedAsTree + 1);
-			this.SetValue("outputNode", newOutputNode);
+			if (outputNode != null) outputNode.SetSerializedValue("timesLinkedAsTree", outputNode.timesLinkedAsTree - 1);
+			if (newOutputNode != null) newOutputNode.SetSerializedValue("timesLinkedAsTree", newOutputNode.timesLinkedAsTree + 1);
+			this.SetSerializedValue("outputNode", newOutputNode);
 		}
 
 		[NonSerialized] public float lastExecutedTime = -9999;
@@ -80,14 +80,14 @@ namespace Ashkatchap.AIBrain.Nodes {
 							 body.rectPixelCorrected.y + body.positionSize.height,
 							 knobSize, knobSize);
 		}
-		
+
 		public Vector2 GetGUIPosForOrderGraph(Vector2 size, GUI_Info info) {
 			var r = GetKnobRect(info);
 			r.x += info.knobSize;
 			r.y += (r.height - size.y) * 0.5f;
 			return r.position;
 		}
-		
+
 		public void DrawKnob(GUI_Info info) {
 			GUI.color = GetColor();
 			GUI.DrawTexture(GetKnobRect(info), GUI_Info.TreeKnob);

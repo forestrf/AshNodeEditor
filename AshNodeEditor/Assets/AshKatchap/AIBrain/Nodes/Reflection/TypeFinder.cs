@@ -1,5 +1,4 @@
-﻿using Ashkatchap.AIBrain.Nodes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,7 +11,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 
 	public static class TypeFinder {
 		public static readonly Type[] Types;
-		private static readonly Dictionary<Type, MemberInfo[]> MembersByType = new Dictionary<Type, MemberInfo[]>(); 
+		private static readonly Dictionary<Type, MemberInfo[]> MembersByType = new Dictionary<Type, MemberInfo[]>();
 
 		static TypeFinder() {
 			if (Types == null || Types.Length == 0) {
@@ -20,7 +19,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 					.Where(a => !a.GetName().Name.StartsWith("UnityEditor") &&
 					!a.GetName().Name.StartsWith("Assembly-CSharp-Editor"))
 					.SelectMany(a => a.GetTypes())
-					.Where(t => 
+					.Where(t =>
 					!typeof(Group).IsAssignableFrom(t) &&
 					!typeof(Context).IsAssignableFrom(t) &&
 					(typeof(UnityEngine.Object).IsAssignableFrom(t) ||
@@ -49,7 +48,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 				MembersByType.Add(type, methods);
 			}
 		}
-		
+
 		static Type[] supportedTypes = GetFilteredStaticTypes();
 
 		public static MethodInfo[] GetMethods(Type type) {
@@ -86,7 +85,8 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 					PropertyInfo propertyInfo = members[i] as PropertyInfo;
 					if (!propertyInfo.IsDefined(typeof(ObsoleteAttribute), true) && propertyInfo.CanWrite && IsSupportedType(supportedTypes, propertyInfo.PropertyType))
 						validMembers.Add(propertyInfo);
-				} else if (members[i].MemberType == MemberTypes.Field) {
+				}
+				else if (members[i].MemberType == MemberTypes.Field) {
 					FieldInfo fieldInfo = members[i] as FieldInfo;
 					if (!fieldInfo.IsDefined(typeof(ObsoleteAttribute), true) && IsSupportedType(supportedTypes, fieldInfo.FieldType))
 						validMembers.Add(fieldInfo);
@@ -163,10 +163,12 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 				displayName += ")";
 				displayName += " : " + GetCleanTypeName(method.ReturnType, richFormat);
 				return displayName;
-			} else if (memberInfo.MemberType == MemberTypes.Property) {
+			}
+			else if (memberInfo.MemberType == MemberTypes.Property) {
 				PropertyInfo propertyInfo = memberInfo as PropertyInfo;
 				return (prependMemberType ? GetCleanTypeName(propertyInfo.PropertyType, richFormat) + " " : "") + GetNameFormat(propertyInfo.Name, richFormat);
-			} else {
+			}
+			else {
 				FieldInfo fieldInfo = memberInfo as FieldInfo;
 				return (prependMemberType ? GetCleanTypeName(fieldInfo.FieldType, richFormat) + " " : "") + GetNameFormat(fieldInfo.Name, richFormat);
 			}

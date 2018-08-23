@@ -1,8 +1,8 @@
-﻿using Ashkatchap.AIBrain.Nodes;
+﻿using Ashkatchap.AIBrain.GeneratedNodes;
+using Ashkatchap.AIBrain.Nodes;
 using System;
-using UnityEngine;
-using Ashkatchap.AIBrain.GeneratedNodes;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Ashkatchap.AIBrain {
 	// HACER ALGO SIMILAR A VARIABLE: Crear los inputs conforme se necesitan según el tipo del objeto puesto
@@ -45,7 +45,7 @@ namespace Ashkatchap.AIBrain {
 		protected override void Draw() {
 			UnityEditor.EditorGUIUtility.labelWidth = 60;
 			UnityEditor.EditorGUIUtility.fieldWidth = 40;
-			
+
 			animator.DisplayLayout("Animator");
 			animatorLayer.DisplayLayout("Layer");
 			animationClip.DisplayLayout("Clip");

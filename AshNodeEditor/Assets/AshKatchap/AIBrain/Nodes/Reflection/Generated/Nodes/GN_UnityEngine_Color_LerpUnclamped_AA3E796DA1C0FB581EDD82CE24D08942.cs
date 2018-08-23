@@ -2,8 +2,8 @@
 //// FILE GENERATED AUTOMATICALLY ////
 //////////////////////////////////////
 
-using System;
 using Ashkatchap.AIBrain.Nodes;
+using System;
 
 namespace Ashkatchap.AIBrain.GeneratedNodes {
 	[Serializable]
@@ -33,7 +33,7 @@ namespace Ashkatchap.AIBrain.GeneratedNodes {
 		}
 
 		public override void Calculate() {
-			returnVar.SetValue(UnityEngine.Color.LerpUnclamped(a.GetValue(), b.GetValue(), t.GetValue()));
+			returnVar.value = (UnityEngine.Color.LerpUnclamped(a.GetValue(), b.GetValue(), t.GetValue()));
 		}
 
 #if UNITY_EDITOR

@@ -9,7 +9,7 @@ namespace Ashkatchap.AIBrain {
 	[CreateNode("Math/And")]
 	public class And : Node {
 		public Output_System_Boolean res;
-		
+
 		public override NodeTreeOutput Tick(out ExecutionResult executionResult, ExecutionResult childResult) {
 			Calculate();
 			executionResult = ExecutionResult.Success;
@@ -19,11 +19,11 @@ namespace Ashkatchap.AIBrain {
 		public override void Calculate() {
 			foreach (var input in inputs) {
 				if (!((Input_System_Boolean) input).GetValue()) {
-					res.SetValue(false);
+					res.value = false;
 					return;
 				}
 			}
-			res.SetValue(true);
+			res.value = true;
 		}
 
 #if UNITY_EDITOR
@@ -40,7 +40,8 @@ namespace Ashkatchap.AIBrain {
 				GUILayout.BeginHorizontal();
 				if (GUILayout.Button("-")) {
 					inputs[i].OnDelete();
-				} else {
+				}
+				else {
 					inputs[i].DisplayLayout((i + 1).ToString());
 				}
 				GUILayout.EndHorizontal();

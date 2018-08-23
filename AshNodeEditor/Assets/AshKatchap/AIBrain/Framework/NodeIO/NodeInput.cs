@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Ashkatchap.Shared;
 using System;
-using Ashkatchap.Shared;
+using UnityEngine;
 
 namespace Ashkatchap.AIBrain.Nodes {
 	[Serializable]
@@ -32,7 +32,7 @@ namespace Ashkatchap.AIBrain.Nodes {
 		}
 
 		public void SetOutput(NodeOutput nodeOutput) {
-			this.SetValue("_nodeOutput", nodeOutput);
+			this.SetSerializedValue("_nodeOutput", nodeOutput);
 		}
 
 		public override void OnDelete() {
@@ -55,10 +55,12 @@ namespace Ashkatchap.AIBrain.Nodes {
 			if (body.isVisible) {
 				if (nodeOutput != null) {
 					GUILayout.Label(guiContent, UnityEditor.EditorStyles.label);
-				} else {
+				}
+				else {
 					this.LayoutPropertyField("defaultValue", guiContent);
 				}
-			} else {
+			}
+			else {
 				GUILayout.Label(guiContent, UnityEditor.EditorStyles.label);
 			}
 			if (setKnobRect) TrySetLastRect();

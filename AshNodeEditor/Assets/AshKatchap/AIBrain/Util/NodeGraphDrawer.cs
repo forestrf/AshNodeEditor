@@ -15,7 +15,7 @@ namespace Ashkatchap.AIBrain {
 		public GraphDrawer(int historyLength) {
 			this.histotyLength = historyLength;
 		}
-		
+
 		public void UpdateHistory(List<KeyValuePair<T, float>> newValues) {
 			foreach (var elem in newValues) {
 				CircularBuffer<float> buffer;
@@ -80,7 +80,7 @@ namespace Ashkatchap.AIBrain {
 					}
 				}
 			}
-			
+
 			GL.End();
 			GL.PopMatrix();
 		}
