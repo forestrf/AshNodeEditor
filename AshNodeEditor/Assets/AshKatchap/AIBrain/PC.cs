@@ -150,18 +150,22 @@ namespace Ashkatchap.AIBrain {
 		/// This node has not finished doing all it needs to do, but a child node needs to run before continuing
 		/// </summary>
 		Running,
+
 		/// <summary>
 		/// This node has finished doing all it has to do OK
 		/// </summary>
 		Success,
+
 		/// <summary>
 		/// This node has finished doing all it has to do FAIL
 		/// </summary>
 		Failure,
+
 		/// <summary>
 		/// This node wants to stop the execution of the tree for now and wants to be executed again in the next tick
 		/// </summary>
 		StopExecutionAtMe,
+
 		/// <summary>
 		/// Finish/Break Execution and clear Stack
 		/// </summary>
