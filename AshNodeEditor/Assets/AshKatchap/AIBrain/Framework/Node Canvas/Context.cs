@@ -67,8 +67,12 @@ namespace Ashkatchap.AIBrain {
 			}
 		}
 
-		public IEnumerable<Node> GetNodes() { return nodes; }
-		public IEnumerable<Group> GetGroups() { return groups; }
+		public void ForeachNode(Action<Node> action) {
+			foreach (var node in nodes) action(node);
+		}
+		public void ForeachGroup(Action<Group> action) {
+			foreach (var group in groups) action(group);
+		}
 		public Node GetNode(int i) { return nodes[i]; }
 		public Group GetGroup(int i) { return groups[i]; }
 		public int GetNodesLength() { return nodes.Length; }

@@ -201,25 +201,23 @@ namespace Ashkatchap.AIBrain {
 
 
 				// Draw groups
-				foreach (var group in nodeCanvas.GetGroups()) {
-					group.Draw(guiInfo);
-				}
+				nodeCanvas.ForeachGroup(g => g.Draw(guiInfo));
 
 				// draw window connectors + window buttons
-				foreach (var node in nodeCanvas.GetNodes()) DrawNodeCurves(node);
-				foreach (var node in nodeCanvas.GetNodes()) DrawNodeKnobs(node);
+				nodeCanvas.ForeachNode(DrawNodeCurves);
+				nodeCanvas.ForeachNode(DrawNodeKnobs);
 
 
 				InputEvents();
 
 				// Draw nodes
 				BeginWindows();
-				int i = -1;
-				foreach (var node in nodeCanvas.GetNodes()) {
-					i++;
+				for (int i = 0; i < nodeCanvas.GetNodesLength(); i++) {
+					var node = nodeCanvas.GetNode(i);
 					if (!node.CalculateVisibility(position.size / nodeCanvas.zoom.GetZoom())) {
 						GUILayout.Window(i, node.rectPixelCorrected, DrawNode, node.GetName(), GUI_Info.nodeStyle);
-					} else {
+					}
+					else {
 						Color originalColor = GUI.backgroundColor;
 						GUI.backgroundColor = nodeCanvas.GetFirstNode() == node ? firstNodeColor : nodeCanvas.StackContainsNode(node) ? nodeInStackColor : node == selectedNode ? selectedNodeColor : nonExecutedColor;
 						GUI.backgroundColor = Color.Lerp(executingNodeColor, GUI.backgroundColor, (Time.time - node.lastExecutedTime) / decayInSeconds);
@@ -230,7 +228,7 @@ namespace Ashkatchap.AIBrain {
 							node.SetCanvasPosition(r.position, guiInfo);
 							if (r.size != Vector2.zero) node.positionSize.size = r.size;
 							if (startRect != node.positionSize) {
-								foreach (var group in nodeCanvas.GetGroups()) group.needsUpdate = true;
+								nodeCanvas.ForeachGroup(g => g.needsUpdate = true);
 							}
 						}
 						GUI.backgroundColor = originalColor;
@@ -372,7 +370,9 @@ namespace Ashkatchap.AIBrain {
 		void ProcessDeferredNodesToDelete() {
 			while (nodesToDelete.Count > 0) {
 				var node = nodesToDelete.Pop();
-				foreach (var group in nodeCanvas.GetGroups()) if (group.ContainsNode(node)) group.needsUpdate = true;
+				nodeCanvas.ForeachGroup(group => {
+					if (group.ContainsNode(node)) group.needsUpdate = true;
+				});
 				node.OnDelete();
 			}
 		}
@@ -493,17 +493,17 @@ namespace Ashkatchap.AIBrain {
 						if (clickedNode != null) {
 							menu.AddItem(new GUIContent("Set as Start Node"), false, () => { nodeCanvas.SetFirstNode(clickedNode); });
 							menu.AddSeparator("");
-							foreach (var group in nodeCanvas.GetGroups()) {
+							nodeCanvas.ForeachGroup(group => {
 								if (!group.ContainsNode(clickedNode)) {
 									menu.AddItem(new GUIContent("Add to Group/" + group.GetName()), false, () => { group.AddNode(clickedNode); group.needsUpdate = true; });
 								}
-							}
+							});
 							menu.AddItem(new GUIContent("Add to Group/New Group"), false, () => { AddGroup().AddNode(clickedNode); });
-							foreach (var group in nodeCanvas.GetGroups()) {
+							nodeCanvas.ForeachGroup(group => {
 								if (group.ContainsNode(clickedNode)) {
 									menu.AddItem(new GUIContent("Remove from Group/" + group.GetName()), false, () => { group.RemoveNode(clickedNode); group.needsUpdate = true; });
 								}
-							}
+							});
 							menu.AddSeparator("");
 							menu.AddItem(new GUIContent("Rename Node"), false, () => { WindowChangeName.AskName(clickedNode, mousePos + position.position); });
 							menu.AddItem(new GUIContent("Delete Node"), false, () => {
@@ -739,7 +739,8 @@ namespace Ashkatchap.AIBrain {
 				return null;
 
 			// Check if we clicked inside a window (or knobSize pixels left or right of it at outputs, for easier knob recognition)
-			foreach (var node in nodeCanvas.GetNodes()) { // From top to bottom because of the render order (though overwritten by active Window, so be aware!)
+			for (int i = 0; i < nodeCanvas.GetNodesLength(); i++) { // From top to bottom because of the render order (though overwritten by active Window, so be aware!)
+				var node = nodeCanvas.GetNode(i);
 				Rect NodeRect = new Rect(node.canvasPosition.x - knobSize, node.canvasPosition.y, node.positionSize.width + knobSize * 2, node.positionSize.height + knobSize);
 				if (NodeRect.Contains(pos)) return node;
 			}
@@ -754,7 +755,8 @@ namespace Ashkatchap.AIBrain {
 				return null;
 
 			// Check if we clicked inside a window (or knobSize pixels left or right of it at outputs, for easier knob recognition)
-			foreach (var group in nodeCanvas.GetGroups()) { // From top to bottom because of the render order (though overwritten by active Window, so be aware!)
+			for (int i = 0; i < nodeCanvas.GetGroupsLength(); i++) { // From top to bottom because of the render order (though overwritten by active Window, so be aware!)
+				var group = nodeCanvas.GetGroup(i);
 				Rect NodeRect = new Rect(group.CanvasPosition.x - groupBorder, group.CanvasPosition.y - groupBorder, group.PositionSize.width + groupBorder * 2, group.PositionSize.height + groupBorder * 2);
 				if (NodeRect.Contains(pos)) return group;
 			}
