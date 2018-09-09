@@ -9,7 +9,7 @@ namespace Ashkatchap.AIBrain {
 	[CustomEditor(typeof(Context))]
 	public class ContextEditor : Editor {
 		public override void OnInspectorGUI() {
-			DrawDefaultInspector();
+			//DrawDefaultInspector();
 
 			Context myTarget = (Context) target;
 			if (GUILayout.Button("Open")) {

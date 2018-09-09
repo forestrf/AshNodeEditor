@@ -6,15 +6,15 @@ using UnityEngine;
 
 namespace Ashkatchap.AIBrain {
 	public partial class Context : MonoBehaviour {
-		[HideInNormalInspector] [SerializeField] private Node[] nodes = new Node[0];
-		[HideInNormalInspector] [SerializeField] private Group[] groups = new Group[0];
-		[HideInNormalInspector] [SerializeField] private Transform _nodesGO;
-		[HideInNormalInspector] [SerializeField] private Transform _ioGO;
-		[HideInNormalInspector] [SerializeField] private Transform _groupsGO;
+		[SerializeField] private Node[] nodes = new Node[0];
+		[SerializeField] private Group[] groups = new Group[0];
+		[SerializeField] private Transform _nodesGO;
+		[SerializeField] private Transform _ioGO;
+		[SerializeField] private Transform _groupsGO;
 
 #if UNITY_EDITOR
-		[HideInNormalInspector] [SerializeField] public Vector2 scrollOffset;
-		[HideInNormalInspector] [SerializeField] public Zoom zoom = new Zoom();
+		[SerializeField] public Vector2 scrollOffset;
+		[SerializeField] public Zoom zoom = new Zoom();
 
 		public const string NAME_nodesGO = "Nodes", NAME_ioGO = "Connections", NAME_groupsGO = "Groups";
 
@@ -64,6 +64,7 @@ namespace Ashkatchap.AIBrain {
 					tr = new GameObject(name).transform;
 					tr.parent = transform;
 				}
+				tr.gameObject.hideFlags = HideFlags.HideInHierarchy;
 			}
 		}
 
