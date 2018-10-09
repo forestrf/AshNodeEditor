@@ -12,8 +12,13 @@ namespace Ashkatchap.AIBrain {
 			//DrawDefaultInspector();
 
 			Context myTarget = (Context) target;
-			if (GUILayout.Button("Open")) {
+			if (GUILayout.Button("Open in new window")) {
 				Node_Editor_GUI editor = CreateInstance<Node_Editor_GUI>();
+				editor.nodeCanvas = myTarget;
+				editor.Show();
+			}
+			if (GUILayout.Button("Open in existing window")) {
+				Node_Editor_GUI editor = Node_Editor_GUI.GetWindow<Node_Editor_GUI>();
 				editor.nodeCanvas = myTarget;
 				editor.Show();
 			}

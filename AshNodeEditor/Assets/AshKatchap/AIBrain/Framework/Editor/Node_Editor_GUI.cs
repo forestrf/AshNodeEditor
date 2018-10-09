@@ -671,7 +671,7 @@ namespace Ashkatchap.AIBrain {
 		}
 
 		public Group AddGroup() {
-			var group = Undo.AddComponent<Group>(nodeCanvas.GroupsGO.gameObject);
+			var group = Undo.AddComponent<Group>(nodeCanvas.contextContainer.gameObject);
 			group.Init(nodeCanvas);
 			return group;
 		}
@@ -695,7 +695,7 @@ namespace Ashkatchap.AIBrain {
 		/// Context Click selection. Here you'll need to register your own using a string identifier
 		/// </summary>
 		public void MenuNodeContextCallback(object obj) {
-			Node node = Undo.AddComponent(nodeCanvas.NodesGO.gameObject, (Type) obj) as Node;
+			Node node = Undo.AddComponent(nodeCanvas.contextContainer.gameObject, (Type) obj) as Node;
 			node.Init(nodeCanvas, mousePos - nodeCanvas.scrollOffset);
 		}
 

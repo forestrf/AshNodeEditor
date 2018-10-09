@@ -100,7 +100,7 @@ namespace Ashkatchap.AIBrain {
 
 		private static Material CreateMaterial() {
 			material = new Material(Shader.Find("Lines/VertexColored"));
-			material.hideFlags = HideFlags.HideAndDontSave;
+			material.hideFlags = HideFlags.DontSave;
 			return material;
 		}
 #endif

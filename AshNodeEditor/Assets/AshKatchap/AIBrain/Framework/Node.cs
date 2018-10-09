@@ -29,13 +29,13 @@ namespace Ashkatchap.AIBrain {
 		[HideInNormalInspector] [SerializeField] public Rect positionSize;
 
 		protected T CreateIO<T>() where T : NodeIO {
-			var io = Undo.AddComponent<T>(nodeCanvas.IoGO.gameObject);
+			var io = Undo.AddComponent<T>(nodeCanvas.contextContainer.gameObject);
 			Type genericType = typeof(T).BaseType.GetGenericArguments()[0];
 			io.Configure(this, genericType);
 			return io;
 		}
 		protected NodeIO CreateIO(Type type) {
-			var io = Undo.AddComponent(nodeCanvas.IoGO.gameObject, type) as NodeIO;
+			var io = Undo.AddComponent(nodeCanvas.contextContainer.gameObject, type) as NodeIO;
 			Type genericType = type.BaseType.GetGenericArguments()[0];
 			io.Configure(this, genericType);
 			return io;
@@ -51,7 +51,7 @@ namespace Ashkatchap.AIBrain {
 			return io;
 		}
 		protected NodeTreeOutput CreateTreeOutput() {
-			var io = Undo.AddComponent<NodeTreeOutput>(nodeCanvas.IoGO.gameObject);
+			var io = Undo.AddComponent<NodeTreeOutput>(nodeCanvas.contextContainer.gameObject);
 			io.Configure(this);
 			return io;
 		}

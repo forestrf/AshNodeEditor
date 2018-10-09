@@ -8,15 +8,15 @@ namespace Ashkatchap.AIBrain {
 	public partial class Context : MonoBehaviour {
 		[SerializeField] private Node[] nodes = new Node[0];
 		[SerializeField] private Group[] groups = new Group[0];
-		[SerializeField] private Transform _nodesGO;
-		[SerializeField] private Transform _ioGO;
-		[SerializeField] private Transform _groupsGO;
+		[SerializeField] private Transform _contextContainer;
 
-#if UNITY_EDITOR
-		[SerializeField] public Vector2 scrollOffset;
-		[SerializeField] public Zoom zoom = new Zoom();
-
-		public const string NAME_nodesGO = "Nodes", NAME_ioGO = "Connections", NAME_groupsGO = "Groups";
+		void Reset() {
+			if (!string.IsNullOrEmpty(gameObjectContainerName)) {
+				var go = transform.Find(gameObjectContainerName);
+				if (null != go) UndoWrapper.DestroyObject(go);
+			}
+			gameObjectContainerName = "Context container " + Guid.NewGuid().ToString();
+		}
 
 		public void AddNode(Node node) {
 			this.Add("nodes", node);
@@ -32,41 +32,29 @@ namespace Ashkatchap.AIBrain {
 			this.Remove("groups", group);
 		}
 
-		public Transform NodesGO {
+		public Transform contextContainer {
 			get {
-				ResolveSubObjects();
-				return _nodesGO;
-			}
-		}
-		public Transform IoGO {
-			get {
-				ResolveSubObjects();
-				return _ioGO;
-			}
-		}
-		public Transform GroupsGO {
-			get {
-				ResolveSubObjects();
-				return _groupsGO;
-			}
-		}
-
-		void ResolveSubObjects() {
-			FixSubObject(ref _nodesGO, NAME_nodesGO);
-			FixSubObject(ref _ioGO, NAME_ioGO);
-			FixSubObject(ref _groupsGO, NAME_groupsGO);
-		}
-
-		void FixSubObject(ref Transform tr, string name) {
-			if (tr == null) {
-				tr = transform.Find(name);
-				if (tr == null) {
-					tr = new GameObject(name).transform;
-					tr.parent = transform;
+				if (_contextContainer == null) {
+					_contextContainer = transform.Find(gameObjectContainerName);
+					if (_contextContainer == null) {
+						_contextContainer = new GameObject(gameObjectContainerName).transform;
+						_contextContainer.parent = transform;
+					}
+					_contextContainer.gameObject.hideFlags = HideFlags.HideInHierarchy;
 				}
-				tr.gameObject.hideFlags = HideFlags.HideInHierarchy;
+				return _contextContainer;
 			}
 		}
+
+		private void OnDestroy() {
+			if (null != _contextContainer)
+				Destroy(_contextContainer.gameObject);
+		}
+
+#if UNITY_EDITOR
+		[SerializeField] public Vector2 scrollOffset;
+		[SerializeField] public Zoom zoom = new Zoom();
+		[SerializeField] public string gameObjectContainerName;
 
 		public void ForeachNode(Action<Node> action) {
 			foreach (var node in nodes) action(node);
