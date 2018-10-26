@@ -34,7 +34,7 @@ namespace Ashkatchap.AIBrain {
 						b.Encapsulate(node.positionSize.position);
 						b.Encapsulate(node.positionSize.position + node.positionSize.size);
 					}
-					oldRect = new Rect(b.min.XY() - border, b.max.XY() - b.min.XY() + border * 2);
+					oldRect = new Rect(new Vector2(b.min.x, b.min.y) - border, new Vector2(b.max.x, b.max.y) - new Vector2(b.min.x, b.min.y) + border * 2);
 				}
 				else {
 					oldRect = new Rect();

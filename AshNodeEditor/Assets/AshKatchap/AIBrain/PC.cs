@@ -111,7 +111,7 @@ namespace Ashkatchap.AIBrain {
 			private Node Peek() {
 				return stack[stackSize - 1];
 			}
-			public void Push(Node node) {
+			private void Push(Node node) {
 				stack[stackSize++] = node;
 			}
 			private Node Pop() {
@@ -130,16 +130,6 @@ namespace Ashkatchap.AIBrain {
 						stack[i].InterruptExecution();
 						stack[i] = null;
 					}
-				}
-			}
-
-			public bool StackHasNodes() {
-				return stackSize > 0;
-			}
-
-			public void Clear() {
-				while (stackSize > 0) {
-					Pop().InterruptExecution();
 				}
 			}
 		}
