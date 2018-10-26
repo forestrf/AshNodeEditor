@@ -476,191 +476,218 @@ namespace Ashkatchap.AIBrain {
 				}
 			}
 
-			if (e.type == EventType.MouseDown) {
-				if (e.button == 2) { // Init scroll
-					scrollWindow = true;
-					e.delta = new Vector2(0, 0);
-					e.Use();
-				} else if (e.button == 1) { // Right click -> Editor Context Click
-					if (clickedOutput != null) {
-						connectInput = new List<NodeInput>(clickedOutput.GetInputs()).ToArray();
-						foreach (var i in connectInput) {
-							clickedOutput.RemoveNodeInput(i);
-						}
-					} else {
-						GenericMenu menu = new GenericMenu();
-
-						if (clickedNode != null) {
-							menu.AddItem(new GUIContent("Set as Start Node"), false, () => { nodeCanvas.SetFirstNode(clickedNode); });
-							menu.AddSeparator("");
-							nodeCanvas.ForeachGroup(group => {
-								if (!group.ContainsNode(clickedNode)) {
-									menu.AddItem(new GUIContent("Add to Group/" + group.GetName()), false, () => { group.AddNode(clickedNode); group.needsUpdate = true; });
-								}
-							});
-							menu.AddItem(new GUIContent("Add to Group/New Group"), false, () => { AddGroup().AddNode(clickedNode); });
-							nodeCanvas.ForeachGroup(group => {
-								if (group.ContainsNode(clickedNode)) {
-									menu.AddItem(new GUIContent("Remove from Group/" + group.GetName()), false, () => { group.RemoveNode(clickedNode); group.needsUpdate = true; });
-								}
-							});
-							menu.AddSeparator("");
-							menu.AddItem(new GUIContent("Rename Node"), false, () => { WindowChangeName.AskName(clickedNode, mousePos + position.position); });
-							menu.AddItem(new GUIContent("Delete Node"), false, () => {
-								if (EditorUtility.DisplayDialog("¿Delete, are you sure?", "¿Do you really want to delete this node?", "Delete it", "Nope, Don't touch it")) {
-									DeleteNodeDeferred(clickedNode);
-								}
-							});
-						} else if (clickedGroup != null) {
-							menu.AddItem(new GUIContent("Rename Group"), false, () => { WindowChangeName.AskName(clickedGroup, mousePos + position.position); });
-							menu.AddItem(new GUIContent("Remove Group"), false, () => {
-								// ok, alt, nope
-								int response = EditorUtility.DisplayDialogComplex("¿Delete, are you sure?", "¿Do you really want to delete this group?", "Delete it", "Nope, Don't touch it", "Delete it + nodes");
-								if (response == 2) {
-									foreach (var node in clickedGroup.GetNodes()) {
-										DeleteNodeDeferred(node);
-									}
-									DeleteGroupDeferred(clickedGroup);
-								}
-								if (response == 0) {
-									DeleteGroupDeferred(clickedGroup);
-								}
-							});
-						} else {
-							foreach (var elem in CreateNodeAttribute.Cached) {
-								menu.AddItem(new GUIContent(elem.Value.name, elem.Value.description), false, MenuNodeContextCallback, elem.Key);
-							}
-						}
-						menu.ShowAsContext();
-					}
-
-					e.Use();
-				} else if (e.button == 0) {
-					scrollWindow = false;
-					e.delta = new Vector2(0, 0);
-					// If a Connection was left clicked, try edit it's transition
-					if (clickedNode != null) {
-						if (clickedOutput != null) {
-							if (connectInput.Length > 0) {
-								bool connectedOk = true;
-								foreach (var i in connectInput) {
-									if (!clickedNode.TryApplyConnection(clickedOutput, i)) {
-										connectedOk = false;
-										break;
-									}
-								}
-								if (connectedOk) {
-									connectInput = new NodeInput[0];
-								}
-							} else {
-								connectOutput = clickedOutput;
-							}
-							e.Use();
-						} else if (clickedTreeOutput != null) {
-							connectTreeOutput = clickedTreeOutput;
-							connectOutput = null;
-							e.Use();
-						} else if (connectOutput != null) {
-							if (!ArrayUtility.Contains((NodeOutput[]) clickedNode.GetOutputs(), connectOutput)) { // If an input was clicked, it'll will now be connected
-								clickedNode.TryApplyConnection(connectOutput, clickedInput);
-								if (!e.control && !e.shift)
-									connectOutput = null;
-							} else {
-								connectOutput = null;
-							}
-							e.Use();
-						} else if (connectTreeOutput != null) {
-							if (clickedNode != connectTreeOutput.GetBody()) {
-								if (clickedNode != null) {
-									connectTreeOutput.Set(clickedNode);
-								}
-							}
-							connectTreeOutput = null;
-							e.Use();
-						} else if (clickedInput != null && clickedInput.nodeOutput != null) { // Input node -> Loose and edit Connection
-							connectOutput = clickedInput.nodeOutput;
-							connectOutput.RemoveNodeInput(clickedInput);
-							e.Use();
-						} else {
-							if (selectedNode != null) selectedNode.isNodeSelected = false;
-							selectedNode = clickedNode;
-						}
-					} else if (clickedGroup != null) {
-						movingGroup = clickedGroup;
-					} else {
-						selectedNode = null;
-						if (connectOutput != null) {
-							connectOutput = null;
-							e.Use();
-						} else if (connectTreeOutput != null) {
-							connectTreeOutput = null;
-							e.Use();
-						} else if (clickedGroup == null) { // Init scroll
+			switch (e.type) {
+				case EventType.MouseDown:
+					switch (e.button) {
+						case 2: // Init scroll
 							scrollWindow = true;
 							e.delta = new Vector2(0, 0);
 							e.Use();
-						}
+							break;
+						case 1: // Right click -> Editor Context Click
+							if (clickedOutput != null) {
+								connectInput = new List<NodeInput>(clickedOutput.GetInputs()).ToArray();
+								foreach (var i in connectInput) {
+									clickedOutput.RemoveNodeInput(i);
+								}
+							}
+							else {
+								GenericMenu menu = new GenericMenu();
+
+								if (clickedNode != null) {
+									menu.AddItem(new GUIContent("Set as Start Node"), false, () => { nodeCanvas.SetFirstNode(clickedNode); });
+									menu.AddSeparator("");
+									nodeCanvas.ForeachGroup(group => {
+										if (!group.ContainsNode(clickedNode)) {
+											menu.AddItem(new GUIContent("Add to Group/" + group.GetName()), false, () => { group.AddNode(clickedNode); group.needsUpdate = true; });
+										}
+									});
+									menu.AddItem(new GUIContent("Add to Group/New Group"), false, () => { AddGroup().AddNode(clickedNode); });
+									nodeCanvas.ForeachGroup(group => {
+										if (group.ContainsNode(clickedNode)) {
+											menu.AddItem(new GUIContent("Remove from Group/" + group.GetName()), false, () => { group.RemoveNode(clickedNode); group.needsUpdate = true; });
+										}
+									});
+									menu.AddSeparator("");
+									menu.AddItem(new GUIContent("Rename Node"), false, () => { WindowChangeName.AskName(clickedNode, mousePos + position.position); });
+									menu.AddItem(new GUIContent("Delete Node"), false, () => {
+										if (EditorUtility.DisplayDialog("¿Delete, are you sure?", "¿Do you really want to delete this node?", "Delete it", "Nope, Don't touch it")) {
+											DeleteNodeDeferred(clickedNode);
+										}
+									});
+								}
+								else if (clickedGroup != null) {
+									menu.AddItem(new GUIContent("Rename Group"), false, () => { WindowChangeName.AskName(clickedGroup, mousePos + position.position); });
+									menu.AddItem(new GUIContent("Remove Group"), false, () => {
+										// ok, alt, nope
+										int response = EditorUtility.DisplayDialogComplex("¿Delete, are you sure?", "¿Do you really want to delete this group?", "Delete it", "Nope, Don't touch it", "Delete it + nodes");
+										if (response == 2) {
+											foreach (var node in clickedGroup.GetNodes()) {
+												DeleteNodeDeferred(node);
+											}
+											DeleteGroupDeferred(clickedGroup);
+										}
+										if (response == 0) {
+											DeleteGroupDeferred(clickedGroup);
+										}
+									});
+								}
+								else {
+									foreach (var elem in CreateNodeAttribute.Cached) {
+										menu.AddItem(new GUIContent(elem.Value.name, elem.Value.description), false, MenuNodeContextCallback, elem.Key);
+									}
+								}
+								menu.ShowAsContext();
+							}
+
+							e.Use();
+							break;
+						case 0:
+							scrollWindow = false;
+							e.delta = new Vector2(0, 0);
+							// If a Connection was left clicked, try edit it's transition
+							if (clickedNode != null) {
+								if (clickedOutput != null) {
+									if (connectInput.Length > 0) {
+										bool connectedOk = true;
+										foreach (var i in connectInput) {
+											if (!clickedNode.TryApplyConnection(clickedOutput, i)) {
+												connectedOk = false;
+												break;
+											}
+										}
+										if (connectedOk) {
+											connectInput = new NodeInput[0];
+										}
+									}
+									else {
+										connectOutput = clickedOutput;
+									}
+									e.Use();
+								}
+								else if (clickedTreeOutput != null) {
+									connectTreeOutput = clickedTreeOutput;
+									connectOutput = null;
+									e.Use();
+								}
+								else if (connectOutput != null) {
+									if (!ArrayUtility.Contains((NodeOutput[]) clickedNode.GetOutputs(), connectOutput)) { // If an input was clicked, it'll will now be connected
+										clickedNode.TryApplyConnection(connectOutput, clickedInput);
+										if (!e.control && !e.shift)
+											connectOutput = null;
+									}
+									else {
+										connectOutput = null;
+									}
+									e.Use();
+								}
+								else if (connectTreeOutput != null) {
+									if (clickedNode != connectTreeOutput.GetBody()) {
+										if (clickedNode != null) {
+											connectTreeOutput.Set(clickedNode);
+										}
+									}
+									connectTreeOutput = null;
+									e.Use();
+								}
+								else if (clickedInput != null && clickedInput.nodeOutput != null) { // Input node -> Loose and edit Connection
+									connectOutput = clickedInput.nodeOutput;
+									connectOutput.RemoveNodeInput(clickedInput);
+									e.Use();
+								}
+								else {
+									if (selectedNode != null) selectedNode.isNodeSelected = false;
+									selectedNode = clickedNode;
+								}
+							}
+							else if (clickedGroup != null) {
+								movingGroup = clickedGroup;
+							}
+							else {
+								selectedNode = null;
+								if (connectOutput != null) {
+									connectOutput = null;
+									e.Use();
+								}
+								else if (connectTreeOutput != null) {
+									connectTreeOutput = null;
+									e.Use();
+								}
+								else if (clickedGroup == null) { // Init scroll
+									scrollWindow = true;
+									e.delta = new Vector2(0, 0);
+									e.Use();
+								}
+							}
+							break;
 					}
-				}
-			} else if (e.type == EventType.MouseUp) {
-				if (movingGroup != null) {
-					movingGroup = null;
-				} else if (e.button == 0 && connectOutput != null) { // Apply a connection if theres a clicked input
-					if (clickedNode == null) {
-						connectOutput = null;
-						e.Use();
-					} else if (!ArrayUtility.Contains((NodeOutput[]) clickedNode.GetOutputs(), connectOutput)) { // If an input was clicked, it'll will now be connected
-						clickedNode.TryApplyConnection(connectOutput, clickedInput);
-						if (!e.control && !e.shift)
+					break;
+				case EventType.MouseUp:
+					if (movingGroup != null) {
+						movingGroup = null;
+					}
+					else if (e.button == 0 && connectOutput != null) { // Apply a connection if theres a clicked input
+						if (clickedNode == null) {
 							connectOutput = null;
-						e.Use();
-					}
-				} else if (e.button == 0 && connectTreeOutput != null) {
-					if (clickedNode != connectTreeOutput.GetBody()) {
-						if (clickedNode != null) {
-							connectTreeOutput.Set(clickedNode);
+							e.Use();
 						}
-						connectTreeOutput = null;
-						e.Use();
+						else if (!ArrayUtility.Contains((NodeOutput[]) clickedNode.GetOutputs(), connectOutput)) { // If an input was clicked, it'll will now be connected
+							clickedNode.TryApplyConnection(connectOutput, clickedInput);
+							if (!e.control && !e.shift)
+								connectOutput = null;
+							e.Use();
+						}
 					}
-				} else if (e.button == 2 || e.button == 0) { // Left/Middle click up -> Stop scrolling
-					scrollWindow = false;
-				}
-			} else if (e.type == EventType.Repaint) {
-				// Draw the currently drawn connection
-				if (connectOutput != null) {
-					DrawNodeCurve(connectOutput.GetKnobRect(guiInfo).center, mousePos, connectOutput.GetColor());
-					Repaint();
-				} else if (connectTreeOutput != null) {
-					DrawNodeCurve(connectTreeOutput.GetKnobRect(guiInfo).center, mousePos, NodeTreeOutput.GetColor(), TangetType.Vertical);
-					Repaint();
-				} else if (connectInput.Length > 0) {
-					foreach (var i in connectInput) {
-						DrawNodeCurve(mousePos, i.GetKnobRect(guiInfo).center, i.GetColor());
+					else if (e.button == 0 && connectTreeOutput != null) {
+						if (clickedNode != connectTreeOutput.GetBody()) {
+							if (clickedNode != null) {
+								connectTreeOutput.Set(clickedNode);
+							}
+							connectTreeOutput = null;
+							e.Use();
+						}
 					}
-					Repaint();
-				}
+					else if (e.button == 2 || e.button == 0) { // Left/Middle click up -> Stop scrolling
+						scrollWindow = false;
+					}
+					break;
+				case EventType.Repaint:
+					// Draw the currently drawn connection
+					if (connectOutput != null) {
+						DrawNodeCurve(connectOutput.GetKnobRect(guiInfo).center, mousePos, connectOutput.GetColor());
+						Repaint();
+					}
+					else if (connectTreeOutput != null) {
+						DrawNodeCurve(connectTreeOutput.GetKnobRect(guiInfo).center, mousePos, NodeTreeOutput.GetColor(), TangetType.Vertical);
+						Repaint();
+					}
+					else if (connectInput.Length > 0) {
+						foreach (var i in connectInput) {
+							DrawNodeCurve(mousePos, i.GetKnobRect(guiInfo).center, i.GetColor());
+						}
+						Repaint();
+					}
+					break;
+				case EventType.ScrollWheel:
+					float multiplier = e.delta.y < 0 ? 2 : e.delta.y > 0 ? 0.5f : 0;
+
+					if (multiplier != 0) {
+						nodeCanvas.zoom.DoZoom(multiplier);
+						/*
+						float diff = nodeCanvas.zoom.zoom - initialZoom;
+
+						if (diff > 0) {
+							nodeCanvas.scrollOffset -= (e.mousePosition * initialZoom) / nodeCanvas.zoom.zoom;
+						} else if (diff < 0) {
+							nodeCanvas.scrollOffset += (e.mousePosition * targetZoom) / nodeCanvas.zoom.zoom;
+						}
+						*/
+					}
+
+					e.Use();
+					break;
 			}
-
-			if (e.type == EventType.ScrollWheel) {
-				float multiplier = e.delta.y < 0 ? 2 : e.delta.y > 0 ? 0.5f : 0;
-
-				if (multiplier != 0) {
-					nodeCanvas.zoom.DoZoom(multiplier);
-					/*
-					float diff = nodeCanvas.zoom.zoom - initialZoom;
-
-					if (diff > 0) {
-						nodeCanvas.scrollOffset -= (e.mousePosition * initialZoom) / nodeCanvas.zoom.zoom;
-					} else if (diff < 0) {
-						nodeCanvas.scrollOffset += (e.mousePosition * targetZoom) / nodeCanvas.zoom.zoom;
-					}
-					*/
-				}
-
-				e.Use();
-			}
-
+			
 			if (scrollWindow) {
 				nodeCanvas.scrollOffset += e.delta / 2;
 			} else if (movingGroup) {

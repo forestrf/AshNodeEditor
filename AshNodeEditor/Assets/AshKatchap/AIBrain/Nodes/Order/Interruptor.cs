@@ -1,5 +1,4 @@
 ﻿using Ashkatchap.AIBrain.Nodes;
-using Ashkatchap.Shared;
 using System;
 using UnityEngine;
 
@@ -7,56 +6,38 @@ namespace Ashkatchap.AIBrain {
 	[Serializable]
 	[CreateNode("Order/Interruptor")]
 	public class Interruptor : Node {
-		public NodeTreeOutput child;
-		public Group[] groups;
-		public Node[] nodes;
-
 		public override NodeTreeOutput Tick(out ExecutionResult executionResult, ExecutionResult childResult) {
-			for (int i = 0; i < nodes.Length; i++) {
-				nodeCanvas.TryInterruptNode(nodes[i]);
-			}
-			for (int j = 0; j < groups.Length; j++) {
-				var nodesGroup = (Node[]) groups[j].GetNodes();
-				for (int i = 0; i < nodesGroup.Length; i++) {
-					nodeCanvas.TryInterruptNode(nodesGroup[i]);
+			for (int i = 0; i < treeOutputs.Length; i++) {
+				if (null != treeOutputs[i].outputNode) {
+					nodeCanvas.TryInterruptNode(treeOutputs[i].outputNode);
 				}
 			}
 
 			executionResult = ExecutionResult.Success;
-			return child;
+			return null;
 		}
 
 		public override void Calculate() { }
 
 #if UNITY_EDITOR
-		public override void Init() {
-			child = CreateTreeOutput();
-		}
+		public override void Init() { }
 
 		protected override void Draw() {
 			GUILayout.BeginHorizontal();
-			child.DisplayLayout("After Interrupting");
+			for (int i = 0; i < treeOutputs.Length; i++) {
+				GUILayout.BeginVertical();
+				if (GUILayout.Button("-")) {
+					treeOutputs[i].OnDelete();
+				}
+				else {
+					treeOutputs[i].DisplayLayout((i + 1).ToString());
+				}
+				GUILayout.EndVertical();
+			}
+			if (GUILayout.Button("+")) {
+				CreateTreeOutput();
+			}
 			GUILayout.EndHorizontal();
-		}
-
-		protected override void DrawInternalInspector() {
-			this.LayoutPropertyField("groups");
-			foreach (var g in groups) {
-				if (g != null) GUILayout.Label(g.GetName());
-			}
-			this.LayoutPropertyField("nodes");
-			foreach (var n in nodes) {
-				if (n != null) GUILayout.Label(n.GetName());
-			}
-		}
-
-		public override void OnSelectedDrawCanvas(GUI_Info info) {
-			foreach (var g in groups) {
-				if (g != null) UnityEditor.Handles.DrawLine(canvasPositionPixelCorrected * info.zoom, g.CanvasPositionPixelCorrected * info.zoom);
-			}
-			foreach (var n in nodes) {
-				if (n != null) UnityEditor.Handles.DrawLine(canvasPositionPixelCorrected * info.zoom, n.canvasPositionPixelCorrected * info.zoom);
-			}
 		}
 #endif
 	}
